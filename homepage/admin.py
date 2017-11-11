@@ -1,21 +1,17 @@
 from django.contrib import admin
 
 # Register your models here.
-from django.contrib import admin
-from .models import Course, Journal, Conference, Research_Interest
+from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibilitie
 
+
+admin.site.register(Department)
+admin.site.register(Designation)
+admin.site.register(Faculty)
+admin.site.register(Education)
 admin.site.register(Course)
 admin.site.register(Journal)
 admin.site.register(Conference)
-admin.site.register(Research_Interest)
-
-from django.contrib import admin
-
-from .models import ProfessionalExperience
-from .models import Achievement
-from .models import AdministrativeResponsibilty
-
+admin.site.register(ResearchInterest)
 admin.site.register(ProfessionalExperience)
 admin.site.register(Achievement)
-admin.site.register(AdministrativeResponsibilty)
-
+admin.site.register(AdministrativeResponsibilitie)
