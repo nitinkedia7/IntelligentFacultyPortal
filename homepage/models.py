@@ -7,17 +7,16 @@ class Department(models.Model):
 		('bsbe', "Biosciences and Bioengineering"),
 		('chem', "Chemistry"),
 		('ce', "Chemical Engineering"),
-		('cive', "Civil Engineering"),
+		('civil', "Civil Engineering"),
 		('des', "Design"),
 		('cse', "Computer Science and Engineering"),
-		('eee', "Electrical and Electronics Engineering"),
-		('ece', "Electrical and Communication Engineering"),
+		('eee', "Electronics and Electrical Engineering"),
 		('hss', "Humanities and Social Sciences"),
 		('phy', "Physics"),
 		('math', "Mathematics"),
 		('mech', "Mechanical Engineering"),
 	)
-	department = models.CharField(max_length=4, choices=DEPARTMENT)
+	department = models.CharField(max_length=6, choices=DEPARTMENT)
 
 	# class Meta:
 
