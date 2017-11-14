@@ -18,12 +18,17 @@ class Department(models.Model):
 		('mech', "Mechanical Engineering"),
 	)
 	department = models.CharField(max_length=6, choices=DEPARTMENT)
-
-	# class Meta:
+	dept_pic = models.ImageField(upload_to="dept_pic", null=True, blank=True, help_text="Department Picture")
 
 
 	def __str__(self):
-		return self.department
+		return self.get_department_display()
+
+	def get_absolute_url(self):
+		"""
+		Returns the url to access a particular instance of MyModelName.
+		"""
+		return reverse('department-detail', args=[str(self.id)])
 
 class Designation(models.Model):
     

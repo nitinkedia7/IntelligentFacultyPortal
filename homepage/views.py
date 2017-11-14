@@ -4,7 +4,8 @@ from .models import Department, Designation, Faculty, Education, Course, Journal
 # Create your views here.
 
 def index(request):
-	return render(request, 'index.html')
+	dep = Department.objects.all
+	return render(request, 'index.html',context={'dep': dep})
 
 class DepartmentDetail(generic.DetailView):
 	model = Department

@@ -1,27 +1,15 @@
 {% extends "base_generic.html" %}
 
-{% block content %} 
-<div class="container-fluid">
-  <div class="row align-items-start">
-  {% load static %}
-    <div class="col"><a href="http://127.0.0.1:8000/home/dept/1"><img src="{% static 'images/cse.jpg' %}" style="width: 100%; height: 100%">Computer Science and Engineering</a></div>
-    <div class="col"><img src="{% static 'images/math.jpg' %}" style="width: 100%; height: 100%">Mathematics</div>
-  </div>
-  <div class="row align-items-start">
-    <div class="col"><img src="{% static 'images/eee.jpg' %}" style="width: 100%; height: 100%">Electronics and Electrical Engineering</div>
-    <div class="col"><img src="{% static 'images/phy.jpg' %}" style="width: 100%; height: 100%">Physics</div>
-  </div>
-   <div class="row align-items-start">
-    <div class="col"><img src="{% static 'images/mech.jpg' %}" style="width: 100%; height: 100%">Mechanical Engineering</div>
-    <div class="col"><img src="{% static 'images/civil.jpg' %}" style="width: 100%; height: 100%">Civil Engineering</div>
-  </div>
-  <div class="row align-items-start">
-    <div class="col"><img src="{% static 'images/bsbe.jpg' %}" style="width: 100%; height: 100%">Biosciences and Bioengineering</div>
-    <div class="col"><img src="{% static 'images/cst.jpg' %}" style="width: 100%; height: 100%">Chemistry</div>
-  </div> 
-  <div class="row align-items-start">
-    <div class="col"><img src="{% static 'images/dod.jpg' %}" style="width: 100%; height: 100%">Design</div>
-    <div class="col"><img src="{% static 'images/hss.jpg' %}" style="width: 100%; height: 100%">Humanaties and Social Sciences</div>
-  </div>
- </div>
+{% block content %}
+	<div class="container-fluid">
+		<div class="row align-items-start">
+			{% for dept in dep %}
+			<div class="col-6">
+   				<a href="{{ dept.get_absolute_url }}"><img src="{{ dept.dept_pic.url }}" style="width: 100%; height: 100%">
+				{{ dept.get_department_display }}
+   				</a>
+   			</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
