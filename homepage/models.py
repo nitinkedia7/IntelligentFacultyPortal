@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 
 class Department(models.Model):
@@ -19,6 +19,9 @@ class Department(models.Model):
 	)
 	department = models.CharField(max_length=4, choices=DEPARTMENT)
 
+	# class Meta:
+
+
 	def __str__(self):
 		return self.department
 
@@ -36,37 +39,35 @@ class Designation(models.Model):
         return self.designation
 
 class Faculty(models.Model):
-    
-    first_name = models.CharField(max_length=20, help_text="Enter First name")
-    last_name = models.CharField(max_length=20, help_text="Enter Last name")
-    
-    phone_res = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
-    phone_office = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
-    
-    iitg_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@iitg.ernet.in</em>.", default="@iitg.ernet.in")
-    other_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@company.com</em>.")
+	
+	first_name = models.CharField(max_length=20, help_text="Enter First name")
+	last_name = models.CharField(max_length=20, help_text="Enter Last name")
+	
+	photo = models.ImageField(upload_to="profile_pic", null=True, blank=True, help_text="Profile Picture")
+	phone_res = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
+	phone_office = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
+	iitg_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@iitg.ernet.in</em>.", default="@iitg.ernet.in")
+	other_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@company.com</em>.")
+	room_number = models.CharField(max_length=5, help_text="Please use the following format: X-XXX")
+	designation = models.ForeignKey('Designation', on_delete=models.SET_NULL, null=True)
+	department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
 
-    room_number = models.CharField(max_length=5, help_text="Please use the following format: X-XXX")
+	# Metadata
+	class Meta:
+		ordering = ["-last_name"]
 
-    designation = models.ForeignKey('Designation', on_delete=models.SET_NULL, null=True)
-    department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
+	# Methods
+	def get_absolute_url(self):
+		"""
+		Returns the url to access a particular instance of MyModelName.
+		"""
+		return reverse('model-detail-view', args=[str(self.id)])
 
-    # Metadata
-    class Meta: 
-        ordering = ["-last_name"]
-
-    # Methods
-    def get_absolute_url(self):
-         """
-         Returns the url to access a particular instance of MyModelName.
-         """
-         return reverse('model-detail-view', args=[str(self.id)])
-    
-    def __str__(self):
-        """
-        String for representing the MyModelName object (in Admin site etc.)
-        """
-        return '{0} {1}'.format(self.first_name, self.last_name)
+	def __str__(self):
+		"""
+		String for representing the MyModelName object (in Admin site etc.)
+		"""
+		return '{0} {1}'.format(self.first_name, self.last_name)
 
 class Education(models.Model):
 

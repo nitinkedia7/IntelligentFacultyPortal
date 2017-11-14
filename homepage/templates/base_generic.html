@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {% block title %}<title>Smart Profile Manager</title>{% endblock %}
+    {% block title %}<title>Intelligent Faculty Portal</title>{% endblock %}
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +12,33 @@
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   </head>
   <body>
-    {% block navbar %} {% endblock %}
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      {% load static %}
+      <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" style="width: 75%; height: 75%"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+<!--         <ul class="nav navbar-nav navbar-brand navbar-right">
+          <li><h1>Intelligent Faculty Portal</h1></li>
+        </ul>
+ -->        <form class="form-inline">
+            <div class="from-group">
+              <input type="text" class="form-control" placeholder="Email">
+            </div>
+            <div class="form-group mx-sm-3">
+              <input type="text" class="form-control" placeholder="Password">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+      </div>
+    </nav>
+    {% endblock %}
     {% block content %} {% endblock %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
