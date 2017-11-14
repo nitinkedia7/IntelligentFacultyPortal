@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from PIL import Image
 # Create your models here.
 
 class Department(models.Model):
@@ -61,6 +62,8 @@ class Faculty(models.Model):
 		Returns the url to access a particular instance of MyModelName.
 		"""
 		return reverse('model-detail-view', args=[str(self.id)])
+	def get_img_url(self):
+		return reverse()
 
 	def __str__(self):
 		"""
