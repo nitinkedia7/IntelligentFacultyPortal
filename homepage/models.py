@@ -18,7 +18,7 @@ class Department(models.Model):
 		('mech', "Mechanical Engineering"),
 	)
 	department = models.CharField(max_length=6, choices=DEPARTMENT)
-	dept_pic = models.ImageField(upload_to="dept_pic", null=True, blank=True, help_text="Department Picture")
+	dept_pic = models.ImageField(upload_to="media/dept_pic", null=True, blank=True, help_text="Department Picture")
 
 
 	def __str__(self):
@@ -48,7 +48,7 @@ class Faculty(models.Model):
 	first_name = models.CharField(max_length=20, help_text="Enter First name")
 	last_name = models.CharField(max_length=20, help_text="Enter Last name")
 	
-	photo = models.ImageField(upload_to="profile_pic", null=True, blank=True, help_text="Profile Picture")
+	photo = models.ImageField(upload_to="media/profile_pic", null=True, blank=True, help_text="Profile Picture")
 	phone_res = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
 	phone_office = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
 	iitg_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@iitg.ernet.in</em>.", default="@iitg.ernet.in")
