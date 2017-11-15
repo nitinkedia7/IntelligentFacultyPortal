@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from PIL import Image
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Department(models.Model):
@@ -44,7 +44,7 @@ class Designation(models.Model):
         return self.designation
 
 class Faculty(models.Model):
-	
+	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 	first_name = models.CharField(max_length=20, help_text="Enter First name")
 	last_name = models.CharField(max_length=20, help_text="Enter Last name")
 	
