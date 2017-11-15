@@ -25,26 +25,28 @@
 		<div class="form-group">
 	    	<label class="col-form-label" for="id_username">{{ form.username.label_tag }}</label>
 	    	<input name="username" type="text" class="form-control form-control-lg" id="id_password" placeholder="Enter Username" style="width: 20rem">
+	    	{% for error in form.username.errors %}
+	            <div class="alert alert-danger">
+	                <strong>{{ error|escape }}</strong>
+	            </div>
+	        {% endfor %}
 	    </div>
 	    <div class="form-group">
 	    	<label class="col-form-label" for="id_password">{{ form.password.label_tag }}</label>
 	    	<input name="password" type="password" class="form-control form-control-lg" id="id_password" placeholder="Enter Password" style="width: 20rem">
+	    	{% for error in form.password.errors %}
+	            <div class="alert alert-danger">
+	                <strong>{{ error|escape }}</strong>
+	            </div>
+	        {% endfor %}	    	
 	    </div>
 	   <button type="submit" class="btn btn-primary">Login</button>
+	   <br>
+   	   	{% for error in form.non_field_errors %}
+	        <div class="alert alert-danger">
+	            <strong>{{ error|escape }}</strong>
+	        </div>
+    	{% endfor %}
 	</form>
-	<br>
-	{% if form.errors %}
-		<p>Your username and password didn't match. Please try again.</p>
-	{% endif %}
-
-	{% if next %}
-	    {% if user.is_authenticated %}
-	    <p>Your account doesn't have access to this page. To proceed,
-	    please login with an account that has access.</p>
-	    {% else %}
-	    <p>Please login to see this page.</p>
-	    {% endif %}
-	{% endif %}
-
 </div>
 {% endblock %}
