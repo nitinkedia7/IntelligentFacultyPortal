@@ -1,0 +1,66 @@
+{% extends "base_generic.html" %}
+
+{% block navbar %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {% load static %}
+    <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" style="width: 75%; height: 75%"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"></ul>
+      <ul class="nav navbar-nav navbar-brand navbar-right">
+        <li><h1>Intelligent Faculty Portal</h1></li>
+      </ul>
+    </div>
+  </nav>
+{% endblock %}
+
+{% block content %}
+<div align="center">
+	<br>
+	<br>
+	<form action="" method="post">
+		{% csrf_token %}
+		<div class="form-group">
+	    	<label class="col-form-label" for="id_username">{{ form.username.label_tag }}</label>
+	    	<input name="username" type="text" class="form-control form-control-lg" id="id_password" placeholder="Enter Username" style="width: 20rem">
+	    </div>
+	    <div class="form-group">
+	    	<label class="col-form-label" for="id_password">{{ form.password1.label_tag }}</label>
+	    	<input name="password1" type="password" class="form-control form-control-lg" id="id_password" placeholder="Enter Password" style="width: 20rem">
+	    </div>
+	   	<div class="form-group">
+	    	<label class="col-form-label" for="id_password">{{ form.password2.label_tag }}</label>
+	    	<input name="password2" type="password" class="form-control form-control-lg" id="id_password" placeholder="Confirm Password" style="width: 20rem">
+	    </div>
+
+	   <button type="submit" class="btn btn-primary">Sign Up</button>
+	</form>
+	<br>
+	{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+	{% endif %}
+
+	{% if next %}
+	    {% if user.is_authenticated %}
+	    <p>Your account doesn't have access to this page. To proceed,
+	    please login with an account that has access.</p>
+	    {% else %}
+	    <p>Please login to see this page.</p>
+	    {% endif %}
+	{% endif %}
+
+</div>
+{% endblock %}
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}
