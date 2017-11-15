@@ -1,5 +1,21 @@
 {% extends "base_generic.html" %}
 
+{% block navbar %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {% load static %}
+    <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" style="width: 75%; height: 75%"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto"></ul>
+      <ul class="nav navbar-nav navbar-brand navbar-right">
+        <li><h1>Intelligent Faculty Portal</h1></li>
+      </ul>
+    </div>
+  </nav>
+{% endblock %}
+
 {% block content %}
 
 {% if form.errors %}
@@ -14,7 +30,7 @@
 	    <p>Please login to see this page.</p>
 	    {% endif %}
 	{% endif %}
-	<br>
+<!-- 	<br>
 	<br>
 	<div align="center">
 	<form method="post" action="{% url 'login' %}">
@@ -28,6 +44,20 @@
 	        <input name="password" type="password" class="form-control" id="password" placeholder="Enter Password" style="width: 300px">
 	    </div>
 	    <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div> -->
+<div align="center">
+	<form action="" method="post">
+		{% csrf_token %}
+		<div class="form-group">
+	    	<label class="col-form-label" for="id_username">{{ form.username.label_tag }}</label>
+	    	<input name="username" type="text" class="form-control form-control-lg" id="id_password" placeholder="Enter Username" style="width: 20rem">
+	    </div>
+	    <div class="form-group">
+	    	<label class="col-form-label" for="id_password">{{ form.password.label_tag }}</label>
+	    	<input name="password" type="password" class="form-control form-control-lg" id="id_password" placeholder="Enter Password" style="width: 20rem">
+	    </div>
+	   <button type="submit" class="btn btn-primary">Login</button>
 	</form>
 </div>
 {% endblock %}
