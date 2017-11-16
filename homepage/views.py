@@ -1,9 +1,11 @@
 from django.views import generic
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.shortcuts import render, redirect
-from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibilitie
+from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibility
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-# Create your views here.
+from django.core.urlresolvers import reverse
+# from .forms import InfoForm
 
 def index(request):
 	dep = Department.objects.all
@@ -25,3 +27,7 @@ def SignUp(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+class FacultyCreate(CreateView):
+	model=Faculty
+	fields = '__all__'

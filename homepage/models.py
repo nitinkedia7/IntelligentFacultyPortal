@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 # Create your models here.
 
 class Department(models.Model):
@@ -25,9 +26,7 @@ class Department(models.Model):
 		return self.get_department_display()
 
 	def get_absolute_url(self):
-		"""
-		Returns the url to access a particular instance of MyModelName.
-		"""
+
 		return reverse('department-detail', args=[str(self.id)])
 
 class Designation(models.Model):
@@ -41,39 +40,35 @@ class Designation(models.Model):
 	)
     designation = models.CharField(max_length=4,choices=DESIGNATION)
     def __str__(self):
-        return self.designation
+        return self.get_designation_display()
 
 class Faculty(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-	first_name = models.CharField(max_length=20, help_text="Enter First name")
-	last_name = models.CharField(max_length=20, help_text="Enter Last name")
 	
-	photo = models.ImageField(upload_to="media/profile_pic", null=True, blank=True, help_text="Profile Picture")
-	phone_res = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
-	phone_office = models.CharField(max_length=15, help_text="Please use the following format: <em>+91-361-258XXXX</em>.", default="+91-361-258XXXX")
-	iitg_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@iitg.ernet.in</em>.", default="@iitg.ernet.in")
-	other_email = models.EmailField(max_length=254, help_text="Please use the following format: <em>username@company.com</em>.")
-	room_number = models.CharField(max_length=5, help_text="Please use the following format: X-XXX")
-	designation = models.ForeignKey('Designation', on_delete=models.SET_NULL, null=True)
-	department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True)
+	first_name = models.CharField(max_length=30)
+	last_name = models.CharField(max_length=30)
+	
+	profile_picture = models.ImageField(upload_to="media/profile_pic", blank=True)
+	residential_phone = models.CharField(max_length=15, default="+91-361-258XXXX", blank=True)
+	office_phone = models.CharField(max_length=15, default="+91-361-258XXXX")
+	iitg_email = models.EmailField("IITG Webmail", max_length=254, default="@iitg.ernet.in")
+	other_email = models.EmailField("Secondary Email", max_length=254, blank=True)
+	room_number = models.CharField(max_length=5, default="H-000")
+	designation = models.ForeignKey('Designation', on_delete=models.PROTECT, null=True)
+	department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
 
 	# Metadata
 	class Meta:
-		ordering = ["-last_name"]
+		ordering = ["-id"]
+		verbose_name_plural = "Faculties"
 
 	# Methods
 	def get_absolute_url(self):
-		"""
-		Returns the url to access a particular instance of MyModelName.
-		"""
+
 		return reverse('model-detail-view', args=[str(self.id)])
-	def get_img_url(self):
-		return reverse()
 
 	def __str__(self):
-		"""
-		String for representing the MyModelName object (in Admin site etc.)
-		"""
+
 		return '{0} {1}'.format(self.first_name, self.last_name)
 
 class Education(models.Model):
@@ -94,6 +89,9 @@ class Education(models.Model):
 
 	def __str__(self):
 		return self.degree
+
+	class Meta:
+		verbose_name_plural = "Education"	
 
 class Course(models.Model):
     faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
@@ -154,7 +152,7 @@ class Achievement(models.Model):
 	def __str__(self):
 		return '{0}, {1}'.format(self.award, self.year)
 
-class AdministrativeResponsibilitie(models.Model):
+class AdministrativeResponsibility(models.Model):
 	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
 	designation = models.CharField(max_length=50)
 	start_month = models.CharField(max_length=50)
@@ -164,3 +162,6 @@ class AdministrativeResponsibilitie(models.Model):
 
 	def __str__(self):
 		return self.designation
+
+	class Meta:
+		verbose_name_plural = "AdministrativeResponsibility"	
