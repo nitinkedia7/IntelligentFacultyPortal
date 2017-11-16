@@ -5,7 +5,6 @@ from .models import Department, Designation, Faculty, Education, Course, Journal
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
-# from .forms import InfoForm
 
 def index(request):
 	dep = Department.objects.all
@@ -13,6 +12,9 @@ def index(request):
 
 class DepartmentDetail(generic.DetailView):
 	model = Department
+
+class FacultyDetail(generic.DetailView):
+	model = Faculty
 
 def SignUp(request):
     if request.method == 'POST':
@@ -31,3 +33,7 @@ def SignUp(request):
 class FacultyCreate(CreateView):
 	model=Faculty
 	fields = '__all__'
+
+def FacultyProfile(request):
+	faculty = request.user.faculty
+	return render(request, 'homepage/faculty_detail.html', context={'faculty': faculty})

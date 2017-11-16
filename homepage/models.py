@@ -65,7 +65,7 @@ class Faculty(models.Model):
 	# Methods
 	def get_absolute_url(self):
 
-		return reverse('model-detail-view', args=[str(self.id)])
+		return reverse('faculty-detail', args=[str(self.id)])
 
 	def __str__(self):
 

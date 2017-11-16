@@ -22,9 +22,9 @@
 			{% for faculty in department.faculty_set.all %}
 			<div class="col">
 				<div class="card text-center" style="width: 20rem;">
-			  		<img class="card-img-top" src="{{ faculty.photo.url }}" style="width: 100%; height: 330px" alt="Profile Pic">
+			  		<img class="card-img-top" src="{{ faculty.profile_picture.url }}" style="width: 100%; height: 330px" alt="Profile Pic">
 			  		<div class="card-body">
-			    		<a href="#"><h4 class="card-title">{{ faculty.first_name }} {{ faculty.last_name }}</h4></a>
+			    		<a href="{{ faculty.get_absolute_url }}"><h4 class="card-title">{{ faculty.first_name }} {{ faculty.last_name }}</h4></a>
 			    		<p class="card-text">{{ faculty.designation.get_designation_display }}<br>
 			    							Email: {{ faculty.iitg_email }}<br>
 			    							Phone: {{ faculty.phone_office }}<br>
