@@ -53,46 +53,46 @@ img.emoji {
 </style>
 <link rel="stylesheet" id="formidable-css" href="{% static 'assets/formidablepro.css' %}" type="text/css" media="all">
 <script type="text/javascript">document.documentElement.className += " js";</script><style></style>
-<style type="text/css">
-	#header h1 {background: #300 /*url({{ faculty.department.dept_pic.url }})*/ center top repeat;}
+<!-- <style type="text/css">
+	#header h1 {background: #666 url(http://www-mtl.mit.edu/wpmu/daa/wp-content/themes/faculty/img/default_header.jpg) right top no-repeat;}
 </style>
- 
+ --> 
 </head>
 <body id="home">
 <div class="container_12">
   <header>
     <div id="header" class="grid_12">
-      <h1>{{ faculty.first_name }} {{ faculty.last_name }}, {{ faculty.designation.get_designation_display }}</h1>
+      <h1>{{ faculty.first_name }} {{ faculty.last_name }}</h1>
     </div>
   </header>
   <div class="clear"></div>
   <div class="grid_3">
     <nav>
-		<div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-8 current_page_item menu-item-10"><a href="http://www-mtl.mit.edu/wpmu/daa/">Home</a></li>
-<li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="http://www-mtl.mit.edu/wpmu/daa/research/">Research</a></li>
+		<div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-8 current_page_item menu-item-10"><!-- <a href="http://www-mtl.mit.edu/wpmu/daa/">Home</a></li>
+ --><li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="http://www-mtl.mit.edu/wpmu/daa/research/">Research</a></li>
 <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="http://www-mtl.mit.edu/wpmu/daa/publications/">Publications</a></li>
 <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6"><a href="http://www-mtl.mit.edu/wpmu/daa/who/">Group Members</a></li>
 </ul></div>    </nav>
-    <div class="sidebar">
+<!--     <div class="sidebar">
             <li id="search-3" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://www-mtl.mit.edu/wpmu/daa/">
-				<!-- <div>
+				<div>
 					<label class="screen-reader-text" for="s">Search for:</label>
 					<input type="text" value="" name="s" id="s">
 					<input type="submit" id="searchsubmit" value="Search">
-				</div> -->
+				</div>
 			</form></li>
   </div>
-</div>
+</div> -->
 <section>
   <div class="grid_9">
      <!-- Display the Title as a link to the Post's permalink. -->
- <h2 id="title"><a href="http://www-mtl.mit.edu/wpmu/daa/" rel="bookmark" title="Permanent Link to Home">Home</a></h2>
-
+<!--  <h2 id="title"><a href="http://www-mtl.mit.edu/wpmu/daa/" rel="bookmark" title="Permanent Link to Home">Home</a></h2>
+ -->
 
  <!-- Display the Post's Content in a div box. -->
  <div class="entry">
    <div class="page-restrict-output"><p>&nbsp;</p>
-<p><a href="{{ faculty.profile_picture.url }}"><img class="aligncenter size-medium wp-image-21" src="{{ faculty.profile_picture.url }}" alt="" width="20%" height="20%" sizes="(max-width: 199px) 100vw, 199px"></a></p>
+<p><a href="{{ faculty.profile_picture.url }}"><img class="aligncenter size-medium wp-image-21" src="{{ faculty.profile_picture.url" }} alt="" width="199" height="300" sizes="(max-width: 199px) 100vw, 199px"></a></p>
 <p>&nbsp;</p>
 <p>Dimitri A. Antoniadis is native of Athens, Greece.&nbsp; He received his B.S. in Physics from the National University of Athens in 1970 and his Ph.D. in Electrical Engineering in 1976 from Stanford University.&nbsp; He joined the MIT EECS faculty in 1978 and currently he holds the Ray and Maria Stata chair in Electrical Engineering.&nbsp; He is well known for seminal contributions to field-effect devices and to silicon process modeling.</p>
 <p>His present research focuses on the physics, technology and modeling of nano-scale devices in Si, Si/SiGe, and III-V materials for CMOS applications.&nbsp; He was the founding Director of the Microsystems Technology Laboratories at MIT.&nbsp; Currently he is the Director of the multi-university (US) Focus Research Center for Materials Structures and Devices centered at MIT.&nbsp; Prof. Antoniadis is Fellow of the IEEE, and member of the National Academy of Engineering.&nbsp; He has received the Solid State Science and Technology Young Author Award of the Electrochemical Society in 1979, the Paul Rappaport Award of the IEEE in 1998, the Andrew S. Grove Award of the IEEE in 2002, the 2004 University Researcher Award of the Semiconductor Industry Association, and the 2004 George E. Smith Award of the IEEE.</p>
