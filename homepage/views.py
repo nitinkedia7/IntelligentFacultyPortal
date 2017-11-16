@@ -36,4 +36,4 @@ class FacultyCreate(CreateView):
 
 def FacultyProfile(request):
 	faculty = request.user.faculty
-	return render(request, 'homepage/faculty_detail.html', context={'faculty': faculty})
+	return render(request, 'homepage/1.html', context={'faculty': faculty})
