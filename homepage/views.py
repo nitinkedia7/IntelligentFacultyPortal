@@ -37,3 +37,29 @@ class FacultyCreate(CreateView):
 def FacultyProfile(request):
 	faculty = request.user.faculty
 	return render(request, 'homepage/faculty_detail.html', context={'faculty': faculty})
+
+# BookInstance.objects.filter(status__exact='o').order_by('due_back')  
+def FacultyAbout(request, pk):
+	faculty = Faculty.objects.filter(id=pk)
+	return render(request, 'homepage/faculty_about.html', context={'faculty': faculty})
+
+def FacultyTeaching(request, pk):
+	faculty = Faculty.objects.filter(id=pk)
+	return render(request, 'homepage/faculty_teaching.html', context={'faculty': faculty})
+
+def FacultyPublications(request, pk):
+	faculty = Faculty.objects.filter(id=pk)
+	return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
+
+def FacultyAttributes(request, fac_id, attr_id):
+	if True:
+		faculty = Faculty.objects.get(id=fac_id)
+		return render(request, 'homepage/faculty_about.html', context={'faculty': faculty})
+	if attr_id == 1:
+		faculty = Faculty.objects.get(id=fac_id)
+		return render(request, 'homepage/faculty_teaching.html', context={'faculty': faculty})
+	if attr_id == 2:
+		faculty = Faculty.objects.get(id=fac_id)
+		return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
+	# faculty = Faculty.objects.get(id=fac_id)
+	# return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
