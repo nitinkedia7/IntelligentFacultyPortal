@@ -9,7 +9,7 @@
 ----------------------------------------------------------------------------------------------------*/
 
 body {
-  font: 13px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+  font: 16px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
 }
 
 hr {
@@ -23,27 +23,27 @@ hr {
 ----------------------------------------------------------------------------------------------------*/
 
 h1 {
-  font-size: 25px;
+  font-size: 37px;
 }
 
 h2 {
-  font-size: 23px;
+  font-size: 35px;
 }
 
 h3 {
-  font-size: 21px;
+  font-size: 30px;
 }
 
 h4 {
-  font-size: 19px;
+  font-size: 29px;
 }
 
 h5 {
-  font-size: 17px;
+  font-size: 25px;
 }
 
 h6 {
-  font-size: 15px;
+  font-size: 22px;
 }
 
 /* `Spacing

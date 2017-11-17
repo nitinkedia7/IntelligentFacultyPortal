@@ -146,6 +146,11 @@
                             <br> {{ exp.institute }}
                             <br> {{ exp.start_year }} to {{ exp.end_year }}</p>
                         {% endfor %}
+                        <p style="font-size: 16px"><strong>Administrative Responsibilities</strong></p>
+                        {% for ar in faculty.administrativeresponsibility_set.all %}
+                        <p>{{ ar.designation }} ({{ ar.start_month }}, {{ ar.start_year }} - {{ ar.end_month }}, {{ ar.end_year }})
+                        </p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

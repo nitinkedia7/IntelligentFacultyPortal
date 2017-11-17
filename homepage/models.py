@@ -68,7 +68,7 @@ class Student(models.Model):
 		return '{0}, {1}'.format(self.first_name, self.last_name)
 
 class Faculty(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, related_name="faculty")
 	
 	first_name = models.CharField(max_length=30)
 	last_name = models.CharField(max_length=30)

@@ -107,15 +107,11 @@
                 </div>
             </nav>
             <div class="sidebar">
-                <li id="search-3" class="widget widget_search">
-                    <form role="search" method="get" id="searchform" class="searchform" action="http://www-mtl.mit.edu/wpmu/daa/">
-                        <!-- <div>
-					<label class="screen-reader-text" for="s">Search for:</label>
-					<input type="text" value="" name="s" id="s">
-					<input type="submit" id="searchsubmit" value="Search">
-				</div> -->
-                    </form>
-                </li>
+				{% if user.is_authenticated %}
+					{% if user.faculty.id == faculty.id %}
+						<a href="{% url 'faculty-register' %}" style="text-decoration:none" title="">Edit Profile</a>
+					{% endif %}
+				{% endif %}
             </div>
         </div>
         <section>
@@ -129,11 +125,11 @@
                 	</div>
                 </div>
             </div>
-            <div class="grid_4">
+            <div class="grid_6">
                 <!-- Display the Post's Content in a div box. -->
                 <div class="entry">
                     <div class="page-restrict-output">
-                        <br><br><br>
+                        <br>
 			    		<p> {{ faculty.first_name }} {{ faculty.last_name }}<br> 
 			    		    {{ faculty.designation.get_designation_display }}<br>
 			    		    Department of {{ faculty.department.get_department_display }}<br>
