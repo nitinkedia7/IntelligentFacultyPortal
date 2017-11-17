@@ -33,7 +33,7 @@ var ADAPT_CONFIG = {
   ]
 };
 </script><style></style>
-<script src="{% static assets/adapt.min.js %}"></script>
+<script src="{% static 'assets/adapt.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'assets/1560.min.css' %}">
 <meta name="robots" content="noindex,follow">
 		<script type="text/javascript">
@@ -71,15 +71,15 @@ img.emoji {
   </header>
   <div class="clear"></div>
   <div class="grid_3">
-    <nav>
-		<div class="menu-main-menu-container">
-      <ul id="menu-main-menu" class="menu">
-      <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="{{ faculty.get_absolute_url }}">Home</a></li>
-      <li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="{% url 'faculty-detail' 'about' %}">About</a></li>
-      <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-detail' 'publications' %}">Publications</a></li>
-      <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2 current_page_item menu-item-6"><a href="{% url 'faculty-detail' 'teaching' %}">Teaching</a></li>
-      </ul>
-    </div>
+  <nav>
+      <div class="menu-main-menu-container">
+          <ul id="menu-main-menu" class="menu">
+              <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="{{ faculty.get_absolute_url }}">Home</a></li>
+              <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-6"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=0 %}">About</a></li>
+              <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=1 %}">Publications</a></li>
+              <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=2 %}">Teaching</a></li>
+          </ul>
+      </div>
   </nav>
     <div class="sidebar">
             <li id="search-3" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://www-mtl.mit.edu/wpmu/daa/">
@@ -94,7 +94,7 @@ img.emoji {
 <section>
   <div class="grid_9">
      <!-- Display the Title as a link to the Post's permalink. -->
- <h2 id="title"><a href="{% url 'faculty-detail' 'about' %}" rel="bookmark" title="Permanent Link to About">About</a></h2>
+ <h2 id="title"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=0 %}" rel="bookmark" title="Permanent Link to About">About</a></h2>
 
 
  <!-- Display the Post's Content in a div box. -->

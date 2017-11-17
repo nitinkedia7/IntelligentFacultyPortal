@@ -1,152 +1,172 @@
 <!DOCTYPE html>
-<!-- saved from url=(0036)http://www-mtl.mit.edu/wpmu/daa/who/ -->
-<html lang="en" class=" js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en" class=" js">
 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>
+        Teaching - {{ faculty.first_name }} {{ faculty.last_name }}
+    </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'assets/master.css' %}">
+    <!--     <script>
+    Edit to suit your needs.
+    var ADAPT_CONFIG = {
+      // Where is your CSS?
+      path: 'http://www-mtl.mit.edu/wpmu/daa/wp-content/themes/faculty/css/',
 
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<title>
-{{ faculty.first_name }} {{ faculty.last_name }}» Group Members</title>
-{% load static %}
-<link rel="stylesheet" href="{% static 'assets/master.css' %}">
-<!-- <noscript> -->
-<!-- &lt;link rel="stylesheet" href="http://www-mtl.mit.edu/wpmu/daa/wp-content/themes/faculty/css/mobile.min.css" /&gt;
-</noscript> -->
-<script>
-// Edit to suit your needs.
-// var ADAPT_CONFIG = {
-//   // Where is your CSS?
-//   path: 'http://www-mtl.mit.edu/wpmu/daa/wp-content/themes/faculty/css/',
+      // false = Only run once, when page first loads.
+      // true = Change on window resize and page tilt.
+      dynamic: true,
 
-//   // false = Only run once, when page first loads.
-//   // true = Change on window resize and page tilt.
-//   dynamic: true,
+      // First range entry is the minimum.
+      // Last range entry is the maximum.
+      // Separate ranges by "to" keyword.
+      range: [
+        '0px    to 760px  = mobile.min.css',
+        '760px  to 980px  = 720.min.css',
+        '980px  to 1280px = 960.min.css',
+        '1280px to 1600px = 1200.min.css',
+        '1600px to 1940px = 1560.min.css',
+        '1940px to 2540px = 1920.min.css',
+        '2540px           = 2520.min.css'
+      ]
+    };
+    </script>
+ -->
+    <script src="{% static 'assets/adapt.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'assets/1560.min.css' %}">
+    <meta name="robots" content="noindex,follow">
+    <script type="text/javascript">
+    window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/", "ext": ".png", "svgUrl": "https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/", "svgExt": ".svg", "source": { "concatemoji": "http:\/\/www-mtl.mit.edu\/wpmu\/daa\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8.3" } };
+    ! function(a, b, c) {
+        function d(a) {
+            var b, c, d, e, f = String.fromCharCode;
+            if (!k || !k.fillText) return !1;
+            switch (k.clearRect(0, 0, j.width, j.height), k.textBaseline = "top", k.font = "600 32px Arial", a) {
+                case "flag":
+                    return k.fillText(f(55356, 56826, 55356, 56819), 0, 0), b = j.toDataURL(), k.clearRect(0, 0, j.width, j.height), k.fillText(f(55356, 56826, 8203, 55356, 56819), 0, 0), c = j.toDataURL(), b !== c && (k.clearRect(0, 0, j.width, j.height), k.fillText(f(55356, 57332, 56128, 56423, 56128, 56418, 56128, 56421, 56128, 56430, 56128, 56423, 56128, 56447), 0, 0), b = j.toDataURL(), k.clearRect(0, 0, j.width, j.height), k.fillText(f(55356, 57332, 8203, 56128, 56423, 8203, 56128, 56418, 8203, 56128, 56421, 8203, 56128, 56430, 8203, 56128, 56423, 8203, 56128, 56447), 0, 0), c = j.toDataURL(), b !== c);
+                case "emoji4":
+                    return k.fillText(f(55358, 56794, 8205, 9794, 65039), 0, 0), d = j.toDataURL(), k.clearRect(0, 0, j.width, j.height), k.fillText(f(55358, 56794, 8203, 9794, 65039), 0, 0), e = j.toDataURL(), d !== e
+            }
+            return !1
+        }
 
-//   // First range entry is the minimum.
-//   // Last range entry is the maximum.
-//   // Separate ranges by "to" keyword.
-//   range: [
-//     '0px    to 760px  = mobile.min.css',
-//     '760px  to 980px  = 720.min.css',
-//     '980px  to 1280px = 960.min.css',
-//     '1280px to 1600px = 1200.min.css',
-//     '1600px to 1940px = 1560.min.css',
-//     '1940px to 2540px = 1920.min.css',
-//     '2540px           = 2520.min.css'
-//   ]
-// };
-</script><style></style>
-<script src="{% static 'assets/adapt.min.js' %}"></script><link rel="stylesheet" href="{% static 'assets/1560.min.css' %}">
-<meta name="robots" content="noindex,follow">
-<link rel="dns-prefetch" href="http://s.w.org/">
-<link rel="alternate" type="application/rss+xml" title="Dimitri A. Antoniadis, Ph.D. » Group Members Comments Feed" href="http://www-mtl.mit.edu/wpmu/daa/who/feed/">
-		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www-mtl.mit.edu\/wpmu\/daa\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8.3"}};
-			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script><script src="{% static 'assets/wp-emoji-release.min.js' %}" type="text/javascript" defer=""></script>
-		<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-<link rel="stylesheet" id="formidable-css" href="{% static 'assets/formidablepro.css' %}" media="all">
-<!-- <link rel="https://api.w.org/" href="http://www-mtl.mit.edu/wpmu/daa/wp-json/">
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www-mtl.mit.edu/wpmu/daa/xmlrpc.php?rsd">
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www-mtl.mit.edu/wpmu/daa/wp-includes/wlwmanifest.xml"> 
-<meta name="generator" content="WordPress 4.8.3">
-<link rel="canonical" href="http://www-mtl.mit.edu/wpmu/daa/who/">
-<link rel="shortlink" href="http://www-mtl.mit.edu/wpmu/daa/?p=2">
-<link rel="alternate" type="application/json+oembed" href="http://www-mtl.mit.edu/wpmu/daa/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww-mtl.mit.edu%2Fwpmu%2Fdaa%2Fwho%2F">
-<link rel="alternate" type="text/xml+oembed" href="http://www-mtl.mit.edu/wpmu/daa/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww-mtl.mit.edu%2Fwpmu%2Fdaa%2Fwho%2F&amp;format=xml"> -->
-<script type="text/javascript">document.documentElement.className += " js";</script>
-<!-- <style type="text/css">
-	#header h1 {background: #666 url(http://www-mtl.mit.edu/wpmu/daa/wp-content/themes/faculty/img/default_header.jpg) right top no-repeat;}
-</style> -->
- 
+        function e(a) {
+            var c = b.createElement("script");
+            c.src = a, c.defer = c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c)
+        }
+        var f, g, h, i, j = b.createElement("canvas"),
+            k = j.getContext && j.getContext("2d");
+        for (i = Array("flag", "emoji4"), c.supports = { everything: !0, everythingExceptFlag: !0 }, h = 0; h < i.length; h++) c.supports[i[h]] = d(i[h]), c.supports.everything = c.supports.everything && c.supports[i[h]], "flag" !== i[h] && (c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && c.supports[i[h]]);
+        c.supports.everythingExceptFlag = c.supports.everythingExceptFlag && !c.supports.flag, c.DOMReady = !1, c.readyCallback = function() { c.DOMReady = !0 }, c.supports.everything || (g = function() { c.readyCallback() }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", g, !1), a.addEventListener("load", g, !1)) : (a.attachEvent("onload", g), b.attachEvent("onreadystatechange", function() { "complete" === b.readyState && c.readyCallback() })), f = c.source || {}, f.concatemoji ? e(f.concatemoji) : f.wpemoji && f.twemoji && (e(f.twemoji), e(f.wpemoji)))
+    }(window, document, window._wpemojiSettings);
+    </script>
+    <script src="{% static 'assets/wp-emoji-release.min.js' %}" type="text/javascript" defer=""></script>
+    <style type="text/css">
+    img.wp-smiley,
+    img.emoji {
+        display: inline !important;
+        border: none !important;
+        box-shadow: none !important;
+        height: 1em !important;
+        width: 1em !important;
+        margin: 0 .07em !important;
+        vertical-align: -0.1em !important;
+        background: none !important;
+        padding: 0 !important;
+    }
+    </style>
+    <link rel="stylesheet" id="formidable-css" href="{% static 'assets/formidablepro.css' %}" type="text/css" media="all">
+    <script type="text/javascript">
+    document.documentElement.className += " js";
+    </script>
+    <style type="text/css">
+    #header h1 {
+        background: #300 url()/*right top no-repeat*/
+        ;
+    }
+    </style>
 </head>
+
 <body>
-<div class="container_12">
-  <header>
-    <div id="header" class="grid_12">
-      <h1>{{ faculty.first_name }} {{ faculty.last_name }}</h1>
-    </div>
-  </header>
-  <div class="clear"></div>
-  <div class="grid_3">
-    <nav>
-    <div class="menu-main-menu-container">
-      <ul id="menu-main-menu" class="menu">
-      <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="{{ faculty.get_absolute_url }}">Home</a></li>
-      <li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="{% url 'faculty-detail' 'about' %}">About</a></li>
-      <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-detail' 'publications' %}">Publications</a></li>
-      <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2 current_page_item menu-item-6"><a href="{% url 'faculty-detail' 'teaching' %}">Teaching</a></li>
-      </ul>
-    </div>
-  </nav>
-    <div class="sidebar">
-            <li id="search-3" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://www-mtl.mit.edu/wpmu/daa/">
-				<div>
-					<!-- <label class="screen-reader-text" for="s">Search for:</label>
-					<input type="text" value="" name="s" id="s">
-					<input type="submit" id="searchsubmit" value="Search"> -->
-				</div>
-			</form></li>
-  </div>
-</div>
-<section>
-  <div class="grid_9">
-     <!-- Display the Title as a link to the Post's permalink. -->
- <!-- <h2 id="title"><a href="http://www-mtl.mit.edu/wpmu/daa/who/" rel="bookmark" title="Permanent Link to Group Members">Group Members</a></h2> -->
-
-
- <!-- Display the Post's Content in a div box. -->
- <div class="entry">
-   <div class="page-restrict-output"><p><strong>Courses<br>
-</strong></p>
-<!-- <p>Jamie Teherani<br>
-teherani@mit.edu<br>
-<a href="http://teherani.weebly.com/">http://teherani.weebly.com/</a></p>
-<div>&nbsp;Jianqiang (Jerome) Lin<br>
-linjq@mit.edu</div>
-<p>Evelina Polyzoeva<br>
-epolyzoe@mit.edu</p>
-<p>Ujwal Radhakrishna<br>
-ujwal@mit.edu</p> -->
-<!-- <p style="font-size: 16px"><strong>Administrative Assistant</strong></p>
-<p>Steven O’Hearn<br>
-sohearn@mit.edu</p> -->
-{% for course in faculty.courses_set.all %}
-<p>{{course.name }} , ({{course.code}}) , {{course.semester}} ,{{course.year}}<br>
-{% endfor %}
-</div> </div>
-  
+    <div class="container_12">
+        <header>
+            <div id="header" class="grid_12">
+                <h1>{{ faculty.first_name }} {{ faculty.last_name }}, {{ faculty.designation.get_designation_display }}</h1>
             </div>
-</section>
-<hr class="grid_12">
-<footer>
-  <div class="grid_6"> <a href="http://web.mit.edu/"><img src="./Dimitri A. Antoniadis, Ph.D. » Group Members_files/mit-blackred-header1.gif" width="357" height="46" alt="Massachusetts Institute of Techology"></a></div>
-  
-  <div class="grid_6">			<div class="textwidget">    <address>
-    <small> <a href="http://www-eecs.mit.edu/">Electrical Engineering &amp; Computer Science</a><br>
-    <a href="http://www-mtl.mit.edu/">Microsystems Technology Laboratory</a><br>
-    60 Vassar Street, 39-427b<br>
-    Cambridge, MA 02139 <br>
-    e: daa@mtl.mit.edu <br>
-    t: 617.253.4693 <br>
-    f: 617.324.5341 </small>
-    </address></div>
-		</div></footer>
-</div>
- <script type="text/javascript" src="./Dimitri A. Antoniadis, Ph.D. » Group Members_files/wp-embed.min.js"></script>
- 
+        </header>
+        <div class="clear"></div>
+        <div class="grid_3">
+            <nav>
+                <div class="menu-main-menu-container">
+                    <ul id="menu-main-menu" class="menu">
+                        <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="{{ faculty.get_absolute_url }}">Home</a></li>
+                        <li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=0 %}">About</a></li>
+                        <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=1 %}">Publications</a></li>
+                        <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2 current_page_item menu-item-6"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=2 %}">Teaching</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="sidebar">
+                <li id="search-3" class="widget widget_search">
+                    <form role="search" method="get" id="searchform" class="searchform" action="http://www-mtl.mit.edu/wpmu/daa/">
+                        <div>
+                            <!-- <label class="screen-reader-text" for="s">Search for:</label>
+          <input type="text" value="" name="s" id="s">
+          <input type="submit" id="searchsubmit" value="Search"> -->
+                        </div>
+                    </form>
+                </li>
+            </div>
+        </div>
+        <section>
+            <div class="grid_9">
+                <!-- Display the Title as a link to the Post's permalink. -->
+                <h2 id="title"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=2 %}" rel="bookmark" title="Permanent Link to Teaching">Teaching</a></h2>
+                <!-- Display the Post's Content in a div box. -->
+                <div class="entry">
+                    <div class="page-restrict-output">
+                        <p style="font-size: 16px"><strong>Courses<br></strong></p>
+                          {% for course in faculty.course_set.all %}
+                            <p>{{ course.code }}: {{ course.name }}<br>
+                                {% if course.semester == "odd" %}
+                                    July-Nov, {{course.year}}
+                                {% endif %}
+                                 {% if course.semester == "even" %}
+                                    Jan-May, {{course.year}}
+                                {% endif %}<br> 
+                          {% endfor %}</p>
+                          <p style="font-size: 16px"><strong>Students<br></strong></p>
+                          {% for student in faculty.students_set.all %}
+                            <p>{{ student.first_name }} {{ student.last_name }}, {{ student.degree }}<br>
+                               Research Topic: {{ student.topic }}<br>
+                               {{ student.start_year }} - {{ student.end_year }} 
+                          {% endfor %}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="grid_12">
+        <footer>
+            <div class="grid_6"> <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" width="40%" height="40%" alt="Indian Institute of Technology Guwahati"></a></div>
+            <div class="grid_6">
+                <div class="textwidget">
+                    <address>
+                        <small><br> <a href="{% url 'department-detail' pk=faculty.department.id %}">
+                        Department of {{ faculty.department.get_department_display }}</a><br>
+                        {{ faculty.department.block }} Block, Academic Complex<br>
+                        <br>
+                        Email: {{ faculty.department.email }}<br>
+                        Phone: {{ faculty.department.phone }}<br>
+                      </small>
+                    </address>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="{% static 'assets/wp-embed.min.js' %}"></script>
+</body>
 
-</body></html>
+</html>

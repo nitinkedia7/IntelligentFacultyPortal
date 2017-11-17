@@ -52,14 +52,10 @@ def FacultyPublications(request, pk):
 	return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
 
 def FacultyAttributes(request, fac_id, attr_id):
-	if True:
-		faculty = Faculty.objects.get(id=fac_id)
-		return render(request, 'homepage/faculty_about.html', context={'faculty': faculty})
-	if attr_id == 1:
-		faculty = Faculty.objects.get(id=fac_id)
-		return render(request, 'homepage/faculty_teaching.html', context={'faculty': faculty})
-	if attr_id == 2:
-		faculty = Faculty.objects.get(id=fac_id)
+	faculty = Faculty.objects.get(id=int(fac_id))
+	if attr_id == "0":		
+		return render(request, 'homepage/faculty_about.html', context={'faculty': faculty})	
+	if attr_id == "1":
 		return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
-	# faculty = Faculty.objects.get(id=fac_id)
-	# return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
+	if attr_id == "2":
+		return render(request, 'homepage/faculty_teaching.html', context={'faculty': faculty})

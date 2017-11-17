@@ -20,11 +20,7 @@ class Department(models.Model):
 	)
 	department = models.CharField(max_length=6, choices=DEPARTMENT)
 	dept_pic = models.ImageField(upload_to="media/dept_pic", null=True, blank=True, help_text="Department Picture")
-	dept_logo = models.ImageField(upload_to="media/dept_logo", null=True, blank=True, help_text="Department Logo")
 
-	email = models.EmailField(max_length=254, default="@iitg.ernet.in", null=True)
-	block = models.CharField(max_length=1, null=True)
-	phone = models.CharField(max_length=15, default="+91-361-258XXXX", null=True)
 
 	def __str__(self):
 		return self.get_department_display()
@@ -46,27 +42,6 @@ class Designation(models.Model):
     def __str__(self):
         return self.get_designation_display()
 
-class Student(models.Model):
-	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
-
-	first_name = models.CharField(max_length=30)
-	last_name = models.CharField(max_length=30)
-	topic = models.CharField(max_length=75)
-	start_year= models.IntegerField()
-	end_year= models.IntegerField()
-	DEGREE = (
-		('bt', "B.Tech"),
-		('bs', "B.Sc"),
-		('be', "B.E"),
-		('mt', "M.Tech"),
-		('ms', "M.Sc"),
-		('ph', "PhD"),
-	)
-	degree = models.CharField(max_length=2, choices=DEGREE, null=True)
-
-	def __str__(self):
-		return '{0}, {1}'.format(self.first_name, self.last_name)
-
 class Faculty(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 	
@@ -81,8 +56,6 @@ class Faculty(models.Model):
 	room_number = models.CharField(max_length=5, default="H-000")
 	designation = models.ForeignKey('Designation', on_delete=models.PROTECT, null=True)
 	department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
-
-	bio = models.CharField(max_length=1500, null=True)
 
 	# Metadata
 	class Meta:
@@ -126,13 +99,10 @@ class Course(models.Model):
     code = models.CharField(max_length=5, help_text="eg. MA101")
     SEMESTER = (
         ('odd', "July-Nov"),
-        ('even', "Jan-April"),
+        ('even', "Jan-March"),
     )
     semester = models.CharField(max_length=4, choices=SEMESTER)
     year = models.IntegerField()
-    class Meta:
-    	ordering = ["year"]
-    	verbose_name_plural = "Courses"
     
     def __str__(self):
         return self.name
@@ -153,18 +123,6 @@ class Conference(models.Model):
     topic = models.CharField(max_length=1000)
     event = models.CharField(max_length=200, help_text="Enter name of event and place where hosted")
     year = models.IntegerField()
-
-    def __str__(self):
-        return self.topic
-
-class Project(models.Model):
-    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
-   
-    title = models.CharField(max_length=100, null=True)
-    sponsor = models.CharField(max_length=50, null=True)
-    budget = models.CharField(max_length=20, null=True)
-    duration = models.CharField(max_length=7, default="20XX-XX", null=True)
-    role = models.CharField(max_length=30, null=True)
 
     def __str__(self):
         return self.topic
