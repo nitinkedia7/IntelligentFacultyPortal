@@ -55,12 +55,12 @@ class Student(models.Model):
 	start_year= models.IntegerField()
 	end_year= models.IntegerField()
 	DEGREE = (
-		('bt', "B.Tech"),
-		('bs', "B.Sc"),
-		('be', "B.E"),
-		('mt', "M.Tech"),
-		('ms', "M.Sc"),
-		('ph', "PhD"),
+		('bt', "Bachelor of Technology (B.Tech)"),
+		('bs', "Bachelor of Science (B.Sc)"),
+		('be', "Bachelor of Engineering (B.E.)"),
+		('mt', "Master of Technology (M.Tech)"),
+		('ms', "Master of Science (M.Sc)"),
+		('ph', "Doctor of Philosophy (Ph.D."),
 	)
 	degree = models.CharField(max_length=2, choices=DEGREE, null=True)
 
@@ -82,7 +82,7 @@ class Faculty(models.Model):
 	designation = models.ForeignKey('Designation', on_delete=models.PROTECT, null=True)
 	department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
 
-	bio = models.CharField(max_length=1500, null=True)
+	biography = models.CharField(max_length=1500, null=True)
 
 	# Metadata
 	class Meta:
@@ -102,23 +102,26 @@ class Education(models.Model):
 
 	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
 	DEGREE = (
-		('bt', "B.Tech"),
-		('bs', "B.Sc"),
-		('be', "B.E"),
-		('mt', "M.Tech"),
-		('ms', "M.Sc"),
-		('ph', "PhD"),
+		('bt', "Bachelor of Technology (B.Tech)"),
+		('bs', "Bachelor of Science (B.Sc)"),
+		('be', "Bachelor of Engineering (B.E.)"),
+		('mt', "Master of Technology (M.Tech)"),
+		('ms', "Master of Science (M.Sc)"),
+		('ph', "Doctor of Philosophy (Ph.D."),
 	)
 	degree = models.CharField(max_length=2, choices=DEGREE, help_text='Degree obtained')
 	branch = models.CharField(max_length=50, help_text="Enter full name of the Discipline")
 	institute = models.CharField(max_length=50, help_text="Enter full name of the Institute")
 	duration = models.CharField(max_length=7, help_text="Please use the following format: <em>XXXX-XX</em>")
-
+	
+	class Meta:
+		ordering = ["duration"]
+		verbose_name_plural = "Education"
+	
 	def __str__(self):
 		return self.degree
 
-	class Meta:
-		verbose_name_plural = "Education"	
+	
 
 class Course(models.Model):
     faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
