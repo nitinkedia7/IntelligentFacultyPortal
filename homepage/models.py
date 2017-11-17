@@ -82,6 +82,8 @@ class Faculty(models.Model):
 	designation = models.ForeignKey('Designation', on_delete=models.PROTECT, null=True)
 	department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
 
+	interests = models.CharField(max_length=200, help_text="Enter your interests separated by commas", null=True)
+
 	biography = models.CharField(max_length=1500, null=True)
 
 	# Metadata
