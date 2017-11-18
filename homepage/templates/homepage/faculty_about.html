@@ -147,7 +147,8 @@
                         {% endfor %}
                         <p style="font-size: 16px"><strong>Administrative Responsibilities</strong></p>
                         {% for ar in faculty.administrativeresponsibility_set.all %}
-                        <p>{{ ar.designation }} ({{ ar.start_month }}, {{ ar.start_year }} - {{ ar.end_month }}, {{ ar.end_year }})
+                        <p> {{ ar.designation }}<br>
+                            {{ ar.start }} till {{ ar.end }}
                         </p>
                         {% endfor %}
                     </div>

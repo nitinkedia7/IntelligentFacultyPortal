@@ -1,7 +1,7 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
-from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibility
+from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
@@ -228,10 +228,9 @@ def AddAdministrativeResponsibility(request, pk):
 		form = AdministrativeResponsibilityForm(request.POST)
 		if form.is_valid():
 			ar.designation = form.cleaned_data['designation']
-			ar.start_month = form.cleaned_data['start_month']
-			ar.end_month = form.cleaned_data['end_month']
-			ar.start_year = form.cleaned_data['start_year']
-			ar.end_year = form.cleaned_data['end_year']
+			ar.start = form.cleaned_data['start']
+			ar.end = form.cleaned_data['end']
+	
 			ar.faculty = faculty
 			ar.save()
 			return redirect(reverse('faculty-detail', args=(faculty.id,)))

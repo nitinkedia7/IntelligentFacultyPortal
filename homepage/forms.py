@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibility, Student
+from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility, Student
 
 class StudentForm(ModelForm):
 	class Meta:

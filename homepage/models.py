@@ -30,11 +30,9 @@ class Department(models.Model):
 		return self.get_department_display()
 
 	def get_absolute_url(self):
-
 		return reverse('department-detail', args=[str(self.id)])
 
-class Designation(models.Model):
-    
+class Designation(models.Model):    
     DESIGNATION = (
 		('asso', "Associate Professor"),
 		('asst', "Assistant Professor"),
@@ -43,11 +41,12 @@ class Designation(models.Model):
 		('hono', "Honorary Professor"),
 	)
     designation = models.CharField(max_length=4,choices=DESIGNATION)
+    
     def __str__(self):
         return self.get_designation_display()
 
 class Student(models.Model):
-	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
+	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
 
 	first_name = models.CharField(max_length=30)
 	last_name = models.CharField(max_length=30)
@@ -55,20 +54,19 @@ class Student(models.Model):
 	start_year= models.IntegerField(default=2016)
 	end_year= models.IntegerField(default=2020)
 	DEGREE = (
-		('bt', "Bachelor of Technology (B.Tech)"),
-		('bs', "Bachelor of Science (B.Sc)"),
-		('be', "Bachelor of Engineering (B.E.)"),
-		('mt', "Master of Technology (M.Tech)"),
-		('ms', "Master of Science (M.Sc)"),
-		('ph', "Doctor of Philosophy (Ph.D."),
+		('bt', "B.Tech"),
+		('bs', "B.Sc"),
+		('be', "B.E."),
+		('mt', "M.Tech"),
+		('ms', "M.Sc"),
+		('ph', "Ph.D."),
 	)
 	degree = models.CharField(max_length=2, choices=DEGREE, null=True)
 
 	def __str__(self):
-		return '{0}, {1}'.format(self.first_name, self.last_name)
+		return '{0} {1}, {2}, {3}'.format(self.first_name, self.last_name, self.degree, self.topic)
 
 	def get_absolute_url(self):
-
 		return reverse('faculty-detail', args=(self.faculty.id,))
 
 class Faculty(models.Model):
@@ -80,33 +78,30 @@ class Faculty(models.Model):
 	profile_picture = models.ImageField(upload_to="media/profile_pic", blank=True)
 	residential_phone = models.CharField(max_length=15, default="+91-361-258XXXX", blank=True)
 	office_phone = models.CharField(max_length=15, default="+91-361-258XXXX")
-	iitg_email = models.EmailField("IITG Webmail", max_length=254, default="@iitg.ernet.in")
-	other_email = models.EmailField("Secondary Email", max_length=254, blank=True)
+	iitg_email = models.EmailField("Primary Email", max_length=254, default="username@iitg.ernet.in")
+	other_email = models.EmailField("Secondary Email", max_length=254, default="username@gmail.com", blank=True)
 	room_number = models.CharField(max_length=5, default="H-000")
 	designation = models.ForeignKey('Designation', on_delete=models.PROTECT, null=True)
 	department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
 
-	interests = models.CharField(max_length=200, help_text="Enter your interests separated by commas", null=True)
+	interests = models.CharField(max_length=200, null=True)
 
 	biography = models.CharField(max_length=1500, null=True)
 
 	# Metadata
 	class Meta:
-		ordering = ["-id"]
+		ordering = ["id"]
 		verbose_name_plural = "Faculties"
 
 	# Methods
 	def get_absolute_url(self):
-
 		return reverse('faculty-detail', args=(self.id,))
 
 	def __str__(self):
-
-		return '{0} {1}'.format(self.first_name, self.last_name)
+		return '{0} {1}, {2}, {3}'.format(self.first_name, self.last_name, self.designation, self.department)
 
 class Education(models.Model):
-
-	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
+	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
 	DEGREE = (
 		('bt', "Bachelor of Technology (B.Tech)"),
 		('bs', "Bachelor of Science (B.Sc)"),
@@ -115,61 +110,67 @@ class Education(models.Model):
 		('ms', "Master of Science (M.Sc)"),
 		('ph', "Doctor of Philosophy (Ph.D."),
 	)
-	degree = models.CharField(max_length=2, choices=DEGREE, help_text='Degree obtained')
-	branch = models.CharField(max_length=50, help_text="Enter full name of the Discipline")
-	institute = models.CharField(max_length=50, help_text="Enter full name of the Institute")
-	duration = models.CharField(max_length=7, help_text="Please use the following format: <em>XXXX-XX</em>")
+	degree = models.CharField(max_length=2, choices=DEGREE)
+	branch = models.CharField(max_length=50)
+	institute = models.CharField(max_length=50)
+	duration = models.CharField(max_length=7, default="XXXX-XX")
 	
 	class Meta:
 		ordering = ["duration"]
 		verbose_name_plural = "Education"
 	
 	def __str__(self):
-		return self.degree
-
-	
+		return '{0}, {1}'.format(self.get_degree_display(), self.branch)
 
 class Course(models.Model):
-    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
-    name = models.CharField(max_length=50)
-    code = models.CharField(max_length=5, help_text="eg. MA101")
+    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
+    name = models.CharField('Course Name', max_length=50)
+    code = models.CharField('Course Code', max_length=6, default="CS221")
     SEMESTER = (
         ('odd', "July-Nov"),
-        ('even', "Jan-April"),
+        ('even', "Jan-May"),
     )
     semester = models.CharField(max_length=4, choices=SEMESTER)
-    year = models.IntegerField()
+    year = models.IntegerField(default=2017)
+    
     class Meta:
     	ordering = ["year"]
     	verbose_name_plural = "Courses"
     
     def __str__(self):
-        return self.name
+        return '{0}, {1}, {2}'.format(self.name, self.get_semester_display(), self.duration)
+    
     def get_absolute_url(self):
     	return reverse('faculty-detail', args=(self.faculty.id,))
 
 class Journal(models.Model):
-    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)   
-    title = models.CharField(max_length=100, help_text="Enter title of Journal")
-    contributors = models.CharField(max_length=100, help_text="Enter names of all contributors")
-    book = models.CharField(max_length=100)
-    year = models.IntegerField()
+    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)   
+    title = models.CharField(max_length=100)
+    contributors = models.CharField(max_length=100)
+    book = models.CharField('Published In', max_length=100)
+    year = models.IntegerField(default=2017)
 
+    class Meta:
+    	ordering = ['year']
+    
     def __str__(self):
-        return self.title
+    	return '{0}, {1}'.format(self.title, self.year)
 
 class Conference(models.Model):
-    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
-    participants = models.CharField(max_length=200, help_text="Enter names of all participants separated by commas")
-    topic = models.CharField(max_length=1000)
-    event = models.CharField(max_length=200, help_text="Enter name of event and place where hosted")
-    year = models.IntegerField()
+    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
+    participants = models.CharField(max_length=200)
+    topic = models.CharField(max_length=100)
+    event = models.CharField(max_length=200)
+    year = models.IntegerField(default=2017)
+
+    class Meta:
+    	ordering = ['year']
 
     def __str__(self):
         return self.topic
 
 class Project(models.Model):
-    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
+    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
    
     title = models.CharField(max_length=100, null=True)
     sponsor = models.CharField(max_length=50, null=True)
@@ -177,44 +178,50 @@ class Project(models.Model):
     duration = models.CharField(max_length=7, default="20XX-XX", null=True)
     role = models.CharField(max_length=30, null=True)
 
-    def __str__(self):
-        return self.topic
+    class Meta:
+    	ordering = ['duration']
 
-class ResearchInterest(models.Model):
-    faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
-    interests = models.CharField(max_length=200, help_text="Enter your interests separated by commas")
     def __str__(self):
-        return self.interests
+        return '{0}, {1}'.format(self.title, self.duration)
+
+# class ResearchInterest(models.Model):
+#     faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
+#     interests = models.CharField(max_length=200, help_text="Enter your interests separated by commas")
+#     def __str__(self):
+#         return self.interests
 
 class ProfessionalExperience(models.Model):
-	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
+	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
 	designation = models.CharField(max_length=50)
 	institute = models.CharField(max_length=200)
-	start_year = models.IntegerField()
-	end_year = models.IntegerField()
+	duration = models.CharField(max_length=20, default="2017-Ongoing")
 
+	class Meta:
+		ordering = ['duration']
 	def __str__(self):
 		return '{0}, {1}'.format(self.designation, self.institute)
 
 class Achievement(models.Model):
-	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
+	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
 	award = models.CharField(max_length=200)
 	awarded_by = models.CharField(max_length=200)
-	year = models.IntegerField()
+	year = models.IntegerField(default=2017)
 
+	class Meta:
+		ordering = ['year']
+	
 	def __str__(self):
 		return '{0}, {1}'.format(self.award, self.year)
 
 class AdministrativeResponsibility(models.Model):
-	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)
+	faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null=True)
 	designation = models.CharField(max_length=50)
-	start_month = models.CharField(max_length=50)
-	start_year = models.IntegerField()
-	end_month = models.CharField(max_length=50)
-	end_year = models.IntegerField()
+	
+	start = models.CharField('From', max_length=20, default="Jan 2017")
+	end = models.CharField('Till', max_length=20, default="Present", blank=True)
+	
+	class Meta:
+		verbose_name_plural = "Administrative Responsibilities"
 
 	def __str__(self):
-		return self.designation
-
-	class Meta:
-		verbose_name_plural = "AdministrativeResponsibility"	
+		return "{0}, {1} to {2}".format(self.designation, self.start, self.end)
