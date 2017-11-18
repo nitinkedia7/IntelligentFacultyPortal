@@ -121,7 +121,10 @@
                 <!-- Display the Post's Content in a div box. -->
                 <div class="entry">
                     <div class="page-restrict-output">
+                        {% if faculty.profile_picture.exists %}
                         <p><a href="{{ faculty.profile_picture.url }}"><img class="aligncenter size-medium wp-image-21" src="{{ faculty.profile_picture.url }}" alt="" width="50%" height="50%"></a></p>
+                        {% endif %}
+
                 	</div>
                 </div>
             </div>

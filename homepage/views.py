@@ -25,7 +25,11 @@ def SignUp(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('faculty-register')
+            faculty = Faculty.objects.create()
+            faculty.user = request.user
+            faculty.save()
+            # return redirect('info')
+            return redirect(reverse('info', args=(faculty.id,)))
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
@@ -33,6 +37,11 @@ def SignUp(request):
 class FacultyCreate(CreateView):
 	model=Faculty
 	fields = '__all__'
+
+class FacultyUpdate(UpdateView):
+	model=Faculty
+	fields = '__all__'
+	# exclude = ['user']
 
 def FacultyProfile(request):
 	faculty = request.user.faculty
@@ -58,7 +67,7 @@ def FacultyRegister(request):
 			faculty.first_name = form.cleaned_data['first_name']
 			faculty.last_name = form.cleaned_data['last_name']
 
-			faculty.profile_picture = form.cleaned_data['profile_picture']
+			# faculty.profile_picture = form.cleaned_data['profile_picture']
 			faculty.residential_phone = form.cleaned_data['residential_phone']
 			faculty.office_phone = form.cleaned_data['office_phone']
 
@@ -69,41 +78,17 @@ def FacultyRegister(request):
 			faculty.designation = form.cleaned_data['designation']
 			faculty.department = form.cleaned_data['department']
 
-			faculty.biography = form.cleaned_data['biography']
+			# faculty.biography = form.cleaned_data['biography']
 			faculty.user = request.user
 
 			faculty.save()
 
-			return redirect(reverse('faculty-detail', args=(faculty.id)))
+			return redirect(reverse('faculty-detail', args=(faculty.id,)))
+			# return redirect(reverse('index'))
+		else:
+			form=FacultyForm()
+			return render(request, 'signup_details.html', {'form': form})
+
 	else:
 		form = FacultyForm()
-		return render(request, 'homepage/faculty_form.html', {'form': form})
-
-
-
-
-# def renew_book_librarian(request, pk):
-#     book_inst=get_object_or_404(BookInstance, pk = pk)
-
-#     # If this is a POST request then process the Form data
-#     if request.method == 'POST':
-
-#         # Create a form instance and populate it with data from the request (binding):
-#         form = RenewBookForm(request.POST)
-
-#         # Check if the form is valid:
-#         if form.is_valid():
-#             # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-#             book_inst.due_back = form.cleaned_data['renewal_date']
-#             book_inst.save()
-
-#             # redirect to a new URL:
-#             return HttpResponseRedirect(reverse('all-borrowed') )
-
-#     # If this is a GET (or any other method) create the default form.
-#     else:
-#         proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
-#         form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})
-
-#     return render(request, 'catalog/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})		
-
+		return render(request, 'signup_details.html', {'form': form})
