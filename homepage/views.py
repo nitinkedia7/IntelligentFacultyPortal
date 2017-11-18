@@ -1,7 +1,7 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.shortcuts import render, redirect
-from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibility
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
+from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ResearchInterest, ProfessionalExperience, Achievement, AdministrativeResponsibility
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
@@ -38,9 +38,29 @@ class FacultyCreate(CreateView):
 	model=Faculty
 	fields = '__all__'
 
+
+class StudentCreate(CreateView):
+	model = Student
+	fields = '__all__'
+	template_name = 'homepage/faculty_form.html'
+
+	def get(self, request, *args, **kwargs):
+	    self.object = None
+	    pk = kwargs.get('pk')
+	    faculty = get_object_or_404(Faculty, pk=pk)
+	    context_data = self.get_context_data()
+	    context_data.update(faculty=faculty)
+	    return self.render_to_response(context_data)
+
+class CourseCreate(CreateView):
+	model = Course
+	fields = '__all__'
+	template_name = 'homepage/faculty_form.html'
+
 class FacultyUpdate(UpdateView):
 	model=Faculty
 	fields = '__all__'
+	template_name = 'homepage/faculty_form.html'
 	# exclude = ['user']
 
 def FacultyProfile(request):
@@ -92,3 +112,25 @@ def FacultyRegister(request):
 	else:
 		form = FacultyForm()
 		return render(request, 'signup_details.html', {'form': form})
+
+from .forms import StudentForm
+
+def AddStudent(request, pk):
+	faculty = Faculty.objects.get(id=int(pk))
+	if request.method == 'POST':
+		student = Student.objects.create()
+		form = StudentForm(request.POST)
+		if form.is_valid():
+			student.first_name = form.cleaned_data['first_name']
+			student.last_name = form.cleaned_data['last_name']
+			student.topic = form.cleaned_data['topic']
+			student.start_year = form.cleaned_data['start_year']
+			student.end_year = form.cleaned_data['end_year']
+			student.degree = form.cleaned_data['degree']
+
+			student.faculty = faculty
+			student.save()
+			return redirect(reverse('faculty-detail', args=(faculty.id,)), context={'faculty': faculty})
+	else:
+		form = StudentForm()
+		return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})

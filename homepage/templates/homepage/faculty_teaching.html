@@ -110,15 +110,12 @@
                 </div>
             </nav>
             <div class="sidebar">
-                <li id="search-3" class="widget widget_search">
-                    <form role="search" method="get" id="searchform" class="searchform" action="http://www-mtl.mit.edu/wpmu/daa/">
-                        <div>
-                            <!-- <label class="screen-reader-text" for="s">Search for:</label>
-          <input type="text" value="" name="s" id="s">
-          <input type="submit" id="searchsubmit" value="Search"> -->
-                        </div>
-                    </form>
-                </li>
+                {% if user.is_authenticated %} 
+                    {% if user.faculty.id == faculty.id %}
+                        <a href="{% url 'faculty-create-course' pk=faculty.id %}" style="text-decoration:none" title="">Add Course</a>
+                        <a href="{% url 'faculty-create-student' pk=faculty.id %}" style="text-decoration:none" title="">Add Student</a>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
         <section>
@@ -129,21 +126,15 @@
                 <div class="entry">
                     <div class="page-restrict-output">
                         <p style="font-size: 16px"><strong>Courses<br></strong></p>
-                          {% for course in faculty.course_set.all %}
-                            <p>{{ course.code }}: {{ course.name }}<br>
-                                {% if course.semester == "odd" %}
-                                    July-Nov, {{course.year}}
-                                {% endif %}
-                                 {% if course.semester == "even" %}
-                                    Jan-May, {{course.year}}
-                                {% endif %}<br> 
-                          {% endfor %}</p>
-                          <p style="font-size: 16px"><strong>Students<br></strong></p>
-                          {% for student in faculty.students_set.all %}
-                            <p>{{ student.first_name }} {{ student.last_name }}, {{ student.degree }}<br>
-                               Research Topic: {{ student.topic }}<br>
-                               {{ student.start_year }} - {{ student.end_year }} 
-                          {% endfor %}</p>
+                        {% for course in faculty.course_set.all %}
+                        <p>{{ course.code }}: {{ course.name }}
+                            <br> {% if course.semester == "odd" %} July-Nov, {{course.year}} {% endif %} {% if course.semester == "even" %} Jan-May, {{course.year}} {% endif %}
+                            <br> {% endfor %}</p>
+                        <p style="font-size: 16px"><strong>Students<br></strong></p>
+                        {% for student in faculty.student_set.all %}
+                        <p>{{ student.first_name }} {{ student.last_name }}, {{ student.degree }}
+                            <br> Research Topic: {{ student.topic }}
+                            <br> {{ student.start_year }} - {{ student.end_year }} {% endfor %}</p>
                     </div>
                 </div>
             </div>

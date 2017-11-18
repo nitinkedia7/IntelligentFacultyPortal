@@ -52,8 +52,8 @@ class Student(models.Model):
 	first_name = models.CharField(max_length=30)
 	last_name = models.CharField(max_length=30)
 	topic = models.CharField(max_length=75)
-	start_year= models.IntegerField()
-	end_year= models.IntegerField()
+	start_year= models.IntegerField(default=2016)
+	end_year= models.IntegerField(default=2020)
 	DEGREE = (
 		('bt', "Bachelor of Technology (B.Tech)"),
 		('bs', "Bachelor of Science (B.Sc)"),
@@ -66,6 +66,10 @@ class Student(models.Model):
 
 	def __str__(self):
 		return '{0}, {1}'.format(self.first_name, self.last_name)
+
+	def get_absolute_url(self):
+
+		return reverse('faculty-detail', args=(self.faculty.id,))
 
 class Faculty(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, related_name="faculty")
@@ -141,6 +145,8 @@ class Course(models.Model):
     
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+    	return reverse('faculty-detail', args=(self.faculty.id,))
 
 class Journal(models.Model):
     faculty = models.ForeignKey('Faculty', on_delete=models.SET_NULL, null = True)   
