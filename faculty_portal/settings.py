@@ -125,3 +125,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'homepage/')
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/home/faculty/'
 LOGOUT_REDIRECT_URL = '/home/'
+
+# Google's reCAPTCHAv2
+RECAPTCHA_PUBLIC_KEY = '6LfLxjoUAAAAAPyWIDvSnuAwdjKmarLfTWbpT08c'
+RECAPTCHA_PRIVATE_KEY = '6LfLxjoUAAAAAJmDSBK7E9LfckxrvkjRS9L-sUu6'
+NOCAPTCHA = True

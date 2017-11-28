@@ -5,10 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>Home - {{ faculty.first_name }} {{ faculty.last_name }}</title>
+    <title>
+        Teaching - {{ faculty.first_name }} {{ faculty.last_name }}
+    </title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'assets/master.css' %}">
-<!--         <script>
+    <!--     <script>
     Edit to suit your needs.
     var ADAPT_CONFIG = {
       // Where is your CSS?
@@ -31,8 +33,9 @@
         '2540px           = 2520.min.css'
       ]
     };
-    </script> -->
- 	<script src="{% static 'assets/adapt.min.js' %}"></script>
+    </script>
+ -->
+    <script src="{% static 'assets/adapt.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'assets/1920.min.css' %}">
     <meta name="robots" content="noindex,follow">
     <script type="text/javascript">
@@ -79,15 +82,15 @@
     <script type="text/javascript">
     document.documentElement.className += " js";
     </script>
-    <style></style>
     <style type="text/css">
     #header h1 {
-        background: #300 /*url({{ faculty.department.dept_pic.url }})center top repeat*/;
+        background: #300 url()/*right top no-repeat*/
+        ;
     }
     </style>
 </head>
 
-<body id="home">
+<body>
     <div class="container_12">
         <header>
             <div id="header" class="grid_12">
@@ -99,16 +102,43 @@
             <nav>
                 <div class="menu-main-menu-container">
                     <ul id="menu-main-menu" class="menu">
-                        <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-6"><a href="{{ faculty.get_absolute_url }}">Home</a></li>
+                        <li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="{{ faculty.get_absolute_url }}">Home</a></li>
                         <li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=0 %}">About</a></li>
                         <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=1 %}">Publications</a></li>
-                        <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=2 %}">Teaching</a></li>
+                        <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2 current_page_item menu-item-6"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=2 %}">Teaching</a></li>
                     </ul>
                 </div>
             </nav>
-            {% block sidebar %}{% endblock %}
+            <div class="sidebar">
+                {% if user.is_authenticated %} 
+                    {% if user.faculty.id == faculty.id %}
+                        <a href="{% url 'faculty-add-course' pk=faculty.id %}" style="text-decoration:none" title="">Add Course</a><br>
+                        <a href="{% url 'faculty-add-student' pk=faculty.id %}" style="text-decoration:none" title="">Add Student</a>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
-        {% block content %}{% endblock %}
+        <section>
+            <div class="grid_9">
+                <!-- Display the Title as a link to the Post's permalink. -->
+                <h2 id="title"><a href="{% url 'faculty-attributes' fac_id=faculty.id attr_id=2 %}" rel="bookmark" title="Permanent Link to Teaching">Teaching</a></h2>
+                <!-- Display the Post's Content in a div box. -->
+                <div class="entry">
+                    <div class="page-restrict-output">
+                        <p style="font-size: 16px"><strong>Courses<br></strong></p>
+                        {% for course in faculty.course_set.all %}
+                        <p>{{ course.code }}: {{ course.name }}
+                            <br> {% if course.semester == "odd" %} July-Nov, {{course.year}} {% endif %} {% if course.semester == "even" %} Jan-May, {{course.year}} {% endif %}
+                            <br> {% endfor %}</p>
+                        <p style="font-size: 16px"><strong>Students<br></strong></p>
+                        {% for student in faculty.student_set.all %}
+                        <p>{{ student.first_name }} {{ student.last_name }}, {{ student.degree }}
+                            <br> Research Topic: {{ student.topic }}
+                            <br> {{ student.start_year }} - {{ student.end_year }} {% endfor %}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
         <hr class="grid_12">
         <footer>
             <div class="grid_6"> <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" width="40%" height="40%" alt="Indian Institute of Technology Guwahati"></a></div>

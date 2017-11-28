@@ -1,12 +1,15 @@
 from django.conf.urls import url, include
-
+from django.contrib.auth import views as auth_views
 from . import views
+from .forms import LoginForm
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^dept/(?P<pk>\d+)$', views.DepartmentDetail.as_view(), name='department-detail'),
 	url(r'^dept/faculty/(?P<pk>\d+)$', views.FacultyDetail.as_view(), name='faculty-detail'),
 	url(r'^accounts/signup/(?P<dept>\d+)$', views.SignUp, name='signup'),
+	url(r'^accounts/login/$', auth_views.login, {'authentication_form' : LoginForm }, name='login'),
+    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
 	
 	# url(r'^faculty/update/(?P<pk>\d+)$', views.FacultyUpdate.as_view(), name='faculty-update-profile'),
 	url(r'^faculty/update/(?P<pk>\d+)$', views.UpdateFaculty, name='faculty-update-profile'),

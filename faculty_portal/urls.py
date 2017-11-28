@@ -32,9 +32,9 @@ urlpatterns += [
     url(r'^$', RedirectView.as_view(url='/home/', permanent=True)),
 ]
 #Add Django site authentication urls (for login, logout, password management)
-urlpatterns += [
-    url(r'^accounts/', include('django.contrib.auth.urls')),
-]
+# urlpatterns += [
+#     url(r'^accounts/', include('django.contrib.auth.urls')),
+# ]
 
 # Use static() to add url mapping to serve static files during development (only)
 from django.conf import settings

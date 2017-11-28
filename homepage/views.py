@@ -5,6 +5,7 @@ from .models import Department, Designation, Faculty, Education, Course, Student
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
+from .forms import SignupForm
 
 def index(request):
 	dep = Department.objects.all
@@ -18,7 +19,7 @@ class FacultyDetail(generic.DetailView):
 
 def SignUp(request, dept):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -31,7 +32,7 @@ def SignUp(request, dept):
             faculty.save()
             return redirect(reverse('faculty-update-profile', args=(faculty.id,)))
     else:
-        form = UserCreationForm()
+        form = SignupForm()
     return render(request, 'signup.html', {'form': form})
 
 # class FacultyCreate(CreateView):
@@ -82,7 +83,8 @@ def UpdateFaculty(request, pk):
 		if form.is_valid():
 			faculty.first_name = form.cleaned_data['first_name']
 			faculty.last_name = form.cleaned_data['last_name']
-			faculty.profile_picture = request.FILES['profile_picture']			
+			if request.FILES:
+				faculty.profile_picture = request.FILES['profile_picture']			
 			faculty.residential_phone = form.cleaned_data['residential_phone']
 			faculty.office_phone = form.cleaned_data['office_phone']
 			faculty.iitg_email = form.cleaned_data['iitg_email']

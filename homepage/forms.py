@@ -1,5 +1,13 @@
 from django.forms import ModelForm
 from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility, Student
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from captcha.fields import ReCaptchaField
+
+class LoginForm(AuthenticationForm):
+	captcha = ReCaptchaField()
+
+class SignupForm(UserCreationForm):
+    captcha = ReCaptchaField()
 
 class StudentForm(ModelForm):
 	class Meta:
