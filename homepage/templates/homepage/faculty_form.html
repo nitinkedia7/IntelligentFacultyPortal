@@ -1,11 +1,11 @@
 {% extends 'homepage/faculty_generic.html' %}
 
 {% block content %}
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
         {{ form }}
+        <tr><td><input type="submit" value="Submit" /></td></tr>
         </table>
-        <input type="submit" value="Submit" />
     </form>
 {% endblock %}

@@ -16,7 +16,7 @@ class DepartmentDetail(generic.DetailView):
 class FacultyDetail(generic.DetailView):
 	model = Faculty
 
-def SignUp(request):
+def SignUp(request, dept):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -27,9 +27,9 @@ def SignUp(request):
             login(request, user)
             faculty = Faculty.objects.create()
             faculty.user = request.user
+            faculty.department = Department.objects.get(id=dept)
             faculty.save()
-            # return redirect('info')
-            return redirect(reverse('info', args=(faculty.id,)))
+            return redirect(reverse('faculty-update-profile', args=(faculty.id,)))
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
@@ -82,6 +82,7 @@ def UpdateFaculty(request, pk):
 		if form.is_valid():
 			faculty.first_name = form.cleaned_data['first_name']
 			faculty.last_name = form.cleaned_data['last_name']
+			faculty.profile_picture = request.FILES['profile_picture']			
 			faculty.residential_phone = form.cleaned_data['residential_phone']
 			faculty.office_phone = form.cleaned_data['office_phone']
 			faculty.iitg_email = form.cleaned_data['iitg_email']

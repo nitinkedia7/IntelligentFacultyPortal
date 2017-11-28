@@ -6,7 +6,7 @@ urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^dept/(?P<pk>\d+)$', views.DepartmentDetail.as_view(), name='department-detail'),
 	url(r'^dept/faculty/(?P<pk>\d+)$', views.FacultyDetail.as_view(), name='faculty-detail'),
-	url(r'^accounts/signup$', views.SignUp, name='signup'),
+	url(r'^accounts/signup/(?P<dept>\d+)$', views.SignUp, name='signup'),
 	
 	# url(r'^faculty/update/(?P<pk>\d+)$', views.FacultyUpdate.as_view(), name='faculty-update-profile'),
 	url(r'^faculty/update/(?P<pk>\d+)$', views.UpdateFaculty, name='faculty-update-profile'),
