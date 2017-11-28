@@ -124,3 +124,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'homepage/')
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/home/faculty/'
+LOGOUT_REDIRECT_URL = '/home/'

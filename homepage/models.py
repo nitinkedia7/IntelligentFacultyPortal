@@ -75,7 +75,7 @@ class Faculty(models.Model):
 	first_name = models.CharField(max_length=30)
 	last_name = models.CharField(max_length=30)
 	
-	profile_picture = models.ImageField(upload_to="media/profile_pic", blank=True)
+	profile_picture = models.ImageField(upload_to="media/profile_pic", default="media/profile_pic/default_profile_pic.jpg", blank=True)
 	residential_phone = models.CharField(max_length=15, default="+91-361-258XXXX", blank=True)
 	office_phone = models.CharField(max_length=15, default="+91-361-258XXXX")
 	iitg_email = models.EmailField("Primary Email", max_length=254, default="username@iitg.ernet.in")

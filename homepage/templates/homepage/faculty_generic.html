@@ -111,12 +111,11 @@
 					{% if user.faculty.id == faculty.id %}
 						<a href="{% url 'faculty-update-profile' pk=faculty.id %}" style="text-decoration:none" title="">Edit Profile</a>
 					{% endif %}
+                        <a href="{% url 'logout' %}" style="text-decoration:none" title="">Logout</a>
 				{% endif %}
             </div>
         </div>
-        <section>
         {% block content %}{% endblock %}
-        </section>
         <hr class="grid_12">
         <footer>
             <div class="grid_6"> <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" width="40%" height="40%" alt="Indian Institute of Technology Guwahati"></a></div>
