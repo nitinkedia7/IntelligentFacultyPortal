@@ -2,14 +2,24 @@ from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
-from .forms import SignupForm
+from .forms import SignupForm, SearchForm
 
 def index(request):
+	form = SearchForm()
 	dep = Department.objects.all
-	return render(request, 'index.html',context={'dep': dep})
+	return render(request, 'index.html',context={'dep': dep, 'form': form,})
+
+def Search(request):
+	if request.method == "POST":
+		form = SearchForm(request.POST)
+		if form.is_valid():
+			name = form.cleaned_data['username']
+			faculty = Faculty.objects.filter(first_name__contains=name)
+			return render(request, 'homepage/faculty_search.html',context={'matching_faculty' : faculty,})
+	else:
+		return redirect(index)
 
 class DepartmentDetail(generic.DetailView):
 	model = Department
@@ -93,6 +103,7 @@ def UpdateFaculty(request, pk):
 			faculty.designation = form.cleaned_data['designation']
 			faculty.department = form.cleaned_data['department']
 			faculty.biography = form.cleaned_data['biography']
+			faculty.interest = form.cleaned_data['interest']
 			faculty.save()
 			return redirect(reverse('faculty-detail', args=(faculty.id,)))
 	else:
@@ -215,8 +226,7 @@ def AddProfessionalExperience(request, pk):
 		if form.is_valid():
 			proex.designation = form.cleaned_data['designation']
 			proex.institute = form.cleaned_data['institute']
-			proex.start_year = form.cleaned_data['start_year']
-			proex.end_year = form.cleaned_data['end_year']
+			proex.duration = form.cleaned_data['duration']
 			proex.faculty = faculty
 			proex.save()
 			return redirect(reverse('faculty-detail', args=(faculty.id,)))

@@ -1,31 +1,33 @@
-{% extends "base_generic.html" %}
-
-{% block navbar %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% extends "base_generic.html" %} {% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     {% load static %}
     <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" style="width: 75%; height: 75%"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto"></ul>
-      <ul class="nav navbar-nav navbar-brand navbar-right">
-        <li><h1>Intelligent Faculty Portal</h1></li>
-      </ul>
+        <ul class="navbar-nav mr-auto"></ul>
+        <ul class="nav navbar-nav navbar-brand navbar-right">
+            <li>
+                <h1>Intelligent Faculty Portal</h1></li>
+        </ul>
     </div>
-  </nav>
-{% endblock %}
-
-{% block content %}
-	<div class="container-fluid">
-		<div class="row align-items-start">
-			{% for dept in dep %}
-			<div class="col-6">
-   				<a href="{{ dept.get_absolute_url }}"><img src="{{ dept.dept_pic.url }}" style="width: 100%; height: 100%">
-				{{ dept.get_department_display }}
-   				</a>
-   			</div>
-			{% endfor %}
-		</div>
-	</div>
+    <form class="form-inline my-2 my-lg-0" method='post' action="{% url 'search' %}">
+      {% csrf_token %}
+      <input name="username" class="form-control mr-sm-2" type="search" placeholder="Search Profile" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+{% endblock %} {% block content %}
+<div class="container-fluid">
+    <div class="row align-items-start">
+        {% for dept in dep %}
+        <div class="col-6">
+            <a href="{{ dept.get_absolute_url }}"><img src="{{ dept.dept_pic.url }}" style="width: 100%; height: 100%">
+        {{ dept.get_department_display }}
+          </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

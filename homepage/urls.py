@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'^accounts/signup/(?P<dept>\d+)$', views.SignUp, name='signup'),
 	url(r'^accounts/login/$', auth_views.login, {'authentication_form' : LoginForm }, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),
+    url(r'^search/$', views.Search, name='search'),
 	
 	# url(r'^faculty/update/(?P<pk>\d+)$', views.FacultyUpdate.as_view(), name='faculty-update-profile'),
 	url(r'^faculty/update/(?P<pk>\d+)$', views.UpdateFaculty, name='faculty-update-profile'),

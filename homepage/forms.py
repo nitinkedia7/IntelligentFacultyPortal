@@ -1,7 +1,11 @@
 from django.forms import ModelForm
-from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility, Student
+from .models import Department, Designation, Faculty, Education, Course, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility, Student, Project
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from captcha.fields import ReCaptchaField
+from django import forms
+
+class SearchForm(forms.Form):
+	username = forms.CharField(max_length=50)		
 
 class LoginForm(AuthenticationForm):
 	captcha = ReCaptchaField()
@@ -41,7 +45,7 @@ class ConferenceForm(ModelForm):
 
 class ProjectForm(ModelForm):
 	class Meta:
-		model = Education
+		model = Project
 		exclude = ['faculty']
 
 class ProfessionalExperienceForm(ModelForm):

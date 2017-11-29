@@ -64,7 +64,7 @@ class Student(models.Model):
 	degree = models.CharField(max_length=2, choices=DEGREE, null=True)
 
 	def __str__(self):
-		return '{0} {1}, {2}, {3}'.format(self.first_name, self.last_name, self.degree, self.topic)
+		return '{0} {1}, {2}, {3}'.format(self.first_name, self.last_name, self.degree.get_degree_display, self.topic)
 
 	def get_absolute_url(self):
 		return reverse('faculty-detail', args=(self.faculty.id,))
