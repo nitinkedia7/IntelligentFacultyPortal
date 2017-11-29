@@ -103,7 +103,7 @@ def UpdateFaculty(request, pk):
 			faculty.designation = form.cleaned_data['designation']
 			faculty.department = form.cleaned_data['department']
 			faculty.biography = form.cleaned_data['biography']
-			faculty.interest = form.cleaned_data['interest']
+			faculty.interests = form.cleaned_data['interests']
 			faculty.save()
 			return redirect(reverse('faculty-detail', args=(faculty.id,)))
 	else:
@@ -268,3 +268,16 @@ def AddProject(request, pk):
 	else:
 		form = ProjectForm()
 	return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})	
+
+from .mail_scan import mailscan
+def AutoUpdate(request, pk):
+	info = mailscan()
+	print(info)
+	if info['type'] == "journal":
+		journal = Journal.objects.create()
+		journal.title = info['title']
+		journal.book = info['paper']
+		journal.faculty = Faculty.objects.get(id=pk)
+		journal.save()
+	
+	return redirect(reverse('faculty-detail', args=(pk,)))

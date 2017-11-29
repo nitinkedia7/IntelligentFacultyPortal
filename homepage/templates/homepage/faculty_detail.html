@@ -2,12 +2,15 @@
 
 {% block sidebar %}
     <div class="sidebar">
-		{% if user.is_authenticated %}
-			{% if user.faculty.id == faculty.id %}
-				<a href="{% url 'faculty-update-profile' pk=faculty.id %}" style="text-decoration:none" title="">Edit Profile</a>
+		<ul>
+			{% if user.is_authenticated %}
+				{% if user.faculty.id == faculty.id %}
+					<li><a href="{% url 'faculty-update-profile' pk=faculty.id %}" style="text-decoration:none" title="">Edit Profile</a></li>
+					<li><a href="{% url 'auto-update' pk=faculty.id %}" style="text-decoration:none" title="">Scan Mail</a></li>
+				{% endif %}
+	                <li><a href="{% url 'logout' %}" style="text-decoration:none" title="">Logout</a></li>
 			{% endif %}
-                <a href="{% url 'logout' %}" style="text-decoration:none" title="">Logout</a>
-		{% endif %}
+		</ul>
     </div>
 {% endblock %}
 {% block content %}

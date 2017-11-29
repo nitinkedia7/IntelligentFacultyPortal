@@ -14,7 +14,8 @@ urlpatterns = [
 	
 	# url(r'^faculty/update/(?P<pk>\d+)$', views.FacultyUpdate.as_view(), name='faculty-update-profile'),
 	url(r'^faculty/update/(?P<pk>\d+)$', views.UpdateFaculty, name='faculty-update-profile'),
-	
+	url(r'^faculty/auto_update/(?P<pk>\d+)$', views.AutoUpdate, name='auto-update'),
+
 	url(r'^faculty/add/course/(?P<pk>\d+)$', views.AddCourse, name='faculty-add-course'),
 	url(r'^faculty/add/student/(?P<pk>\d+)$', views.AddStudent, name='faculty-add-student'),
 	url(r'^faculty/add/conference/(?P<pk>\d+)$', views.AddConference, name='faculty-add-conference'),
