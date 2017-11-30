@@ -24,7 +24,7 @@
                         <br> {% endfor %}</p>
                     <p style="font-size: 16px"><strong>Students<br></strong></p>
                     {% for student in faculty.student_set.all %}
-                    <p>{{ student.first_name }} {{ student.last_name }}, {{ student.degree }}
+                    <p>{{ student.first_name }} {{ student.last_name }}, {{ student.get_degree_display }}
                         <br> Research Topic: {{ student.topic }}
                         <br> {{ student.start_year }} - {{ student.end_year }} {% endfor %}</p>
                 </div>

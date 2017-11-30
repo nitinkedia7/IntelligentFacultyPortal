@@ -64,7 +64,7 @@ class Student(models.Model):
 	degree = models.CharField(max_length=2, choices=DEGREE, null=True)
 
 	def __str__(self):
-		return '{0} {1}, {2}, {3}'.format(self.first_name, self.last_name, self.degree.get_degree_display, self.topic)
+		return '{0} {1}, {2}, {3}'.format(self.first_name, self.last_name, self.get_degree_display(), self.topic)
 
 	def get_absolute_url(self):
 		return reverse('faculty-detail', args=(self.faculty.id,))
@@ -81,8 +81,8 @@ class Faculty(models.Model):
 	iitg_email = models.EmailField("Primary Email", max_length=254, default="username@iitg.ernet.in")
 	other_email = models.EmailField("Secondary Email", max_length=254, default="username@gmail.com", blank=True)
 	room_number = models.CharField(max_length=5, default="H-000")
-	designation = models.ForeignKey('Designation', on_delete=models.PROTECT, null=True)
-	department = models.ForeignKey('Department', on_delete=models.PROTECT, null=True)
+	designation = models.ForeignKey('Designation', on_delete=models.CASCADE, null=True)
+	department = models.ForeignKey('Department', on_delete=models.CASCADE, null=True)
 
 	interests = models.CharField(max_length=200, null=True)
 
@@ -138,7 +138,7 @@ class Course(models.Model):
     	verbose_name_plural = "Courses"
     
     def __str__(self):
-        return '{0}, {1}, {2}'.format(self.name, self.get_semester_display(), self.duration)
+        return '{0}, {1}, {2}'.format(self.name, self.get_semester_display(), self.year)
     
     def get_absolute_url(self):
     	return reverse('faculty-detail', args=(self.faculty.id,))

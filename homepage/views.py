@@ -1,10 +1,11 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
-from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility
+from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility, Project
 from django.contrib.auth import login, authenticate
 from django.core.urlresolvers import reverse
 from .forms import SignupForm, SearchForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
 	form = SearchForm()
@@ -84,7 +85,7 @@ def FacultyAttributes(request, fac_id, attr_id):
 		return render(request, 'homepage/faculty_teaching.html', context={'faculty': faculty})
 
 
-from .forms import FacultyForm, StudentForm, CourseForm, EducationForm, AchievementForm, ProfessionalExperienceForm, AdministrativeResponsibilityForm, ConferenceForm, JournalForm 
+from .forms import FacultyForm, StudentForm, CourseForm, EducationForm, AchievementForm, ProfessionalExperienceForm, AdministrativeResponsibilityForm, ConferenceForm, JournalForm , ProjectForm
 
 def UpdateFaculty(request, pk):
 	faculty = Faculty.objects.get(id=pk)
@@ -252,7 +253,7 @@ def AddAdministrativeResponsibility(request, pk):
 	return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})
 
 def AddProject(request, pk):
-	faculty = Faculty.objects.get(id=int(pk))
+	faculty = Faculty.objects.get(id=pk)
 	if request.method == 'POST':
 		project = Project.objects.create()
 		form = ProjectForm(request.POST)
@@ -270,6 +271,7 @@ def AddProject(request, pk):
 	return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})	
 
 from .mail_scan import mailscan
+@login_required
 def AutoUpdate(request, pk):
 	info = mailscan()
 	print(info)
@@ -277,7 +279,26 @@ def AutoUpdate(request, pk):
 		journal = Journal.objects.create()
 		journal.title = info['title']
 		journal.book = info['paper']
+		journal.contributors = info['contrib']
 		journal.faculty = Faculty.objects.get(id=pk)
 		journal.save()
-	
+	elif info['type'] == "promotion":
+		faculty = Faculty.objects.get(id=pk)
+		print(faculty.designation.designation)
+		faculty.designation.designation = info['designation']
+		print(faculty.designation.designation)
+	elif info['type'] == "adminres":	
+		admres = AdministrativeResponsibility.objects.create()
+		admres.designation = info['responsibility']
+		admres.start = info['from']
+		admres.faculty = Faculty.objects.get(id=pk)
+		admres.save()
+	elif info['type'] == "project":	
+		project = Project.objects.create()
+		project.sponsor = info['sponsor']
+		project.title = info['title']
+		project.budget = info['budget']
+		project.role = info['role']
+		project.faculty = Faculty.objects.get(id=pk)
+		project.save()	
 	return redirect(reverse('faculty-detail', args=(pk,)))

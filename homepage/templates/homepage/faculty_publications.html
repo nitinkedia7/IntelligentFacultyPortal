@@ -32,13 +32,12 @@
                     <p style="font-size: 16px"><strong>Projects</strong>
                       {% for project in faculty.project_set.all %}
                         <p>Title: {{ project.title }}<br>
-                        <p>Sponsor: {{ project.sponsor }}<br>
-                        <p>Budget:  {{ project.budget }}<br>
-                        <p>Duration: {{ project.duration }}<br>
-                        <p>Role: {{ project.role }}</p>
+                          Sponsor: {{ project.sponsor }}<br>
+                          Budget:  {{ project.budget }}<br>
+                          Duration: {{ project.duration }}<br>
+                          Role: {{ project.role }}</p>
                       {% endfor %}
                     </p>
-
                 </div>
             </div>
     </section>

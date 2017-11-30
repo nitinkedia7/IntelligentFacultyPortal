@@ -21,6 +21,12 @@
             <!-- Display the Post's Content in a div box. -->
             <div class="entry">
                 <div class="page-restrict-output">
+                    <p style="font-size: 16px"><strong>Administrative Responsibilities</strong></p>
+                    {% for ar in faculty.administrativeresponsibility_set.all %}
+                    <p> {{ ar.designation }}<br>
+                        {{ ar.start }} till {{ ar.end }}
+                    </p>
+                    {% endfor %}
                     <p style="font-size: 16px"><strong>Education<br></strong></p>
                     {% for edu in faculty.education_set.all %}
                     <p>{{ edu.get_degree_display }}
@@ -38,13 +44,7 @@
                     {% for exp in faculty.professionalexperience_set.all %}
                     <p>{{ exp.designation }}
                         <br> {{ exp.institute }}
-                        <br> {{ exp.start_year }} to {{ exp.end_year }}</p>
-                    {% endfor %}
-                    <p style="font-size: 16px"><strong>Administrative Responsibilities</strong></p>
-                    {% for ar in faculty.administrativeresponsibility_set.all %}
-                    <p> {{ ar.designation }}<br>
-                        {{ ar.start }} till {{ ar.end }}
-                    </p>
+                        <br> {{ exp.duration }}</p>
                     {% endfor %}
                 </div>
             </div>
