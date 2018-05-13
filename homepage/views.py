@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from .models import Department, Designation, Faculty, Education, Course, Student, Journal, Conference, ProfessionalExperience, Achievement, AdministrativeResponsibility, Project
 from django.contrib.auth import login, authenticate
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from .forms import SignupForm, SearchForm
 from django.contrib.auth.decorators import login_required
 
