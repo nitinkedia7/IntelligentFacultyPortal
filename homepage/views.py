@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
 	form = SearchForm()
-	dep = Department.objects.all
+	dep = Department.objects.all()
 	return render(request, 'index.html',context={'dep': dep, 'form': form,})
 
 def Search(request):
@@ -268,37 +268,4 @@ def AddProject(request, pk):
 			return redirect(reverse('faculty-detail', args=(faculty.id,)))
 	else:
 		form = ProjectForm()
-	return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})	
-
-from .mail_scan import mailscan
-@login_required
-def AutoUpdate(request, pk):
-	info = mailscan()
-	print(info)
-	if info['type'] == "journal":
-		journal = Journal.objects.create()
-		journal.title = info['title']
-		journal.book = info['paper']
-		journal.contributors = info['contrib']
-		journal.faculty = Faculty.objects.get(id=pk)
-		journal.save()
-	elif info['type'] == "promotion":
-		faculty = Faculty.objects.get(id=pk)
-		print(faculty.designation.designation)
-		faculty.designation.designation = info['designation']
-		print(faculty.designation.designation)
-	elif info['type'] == "adminres":	
-		admres = AdministrativeResponsibility.objects.create()
-		admres.designation = info['responsibility']
-		admres.start = info['from']
-		admres.faculty = Faculty.objects.get(id=pk)
-		admres.save()
-	elif info['type'] == "project":	
-		project = Project.objects.create()
-		project.sponsor = info['sponsor']
-		project.title = info['title']
-		project.budget = info['budget']
-		project.role = info['role']
-		project.faculty = Faculty.objects.get(id=pk)
-		project.save()	
-	return redirect(reverse('faculty-detail', args=(pk,)))
+	return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})
