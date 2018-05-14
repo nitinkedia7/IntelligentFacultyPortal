@@ -2,6 +2,17 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.contrib import admin
+# Models for Gmail API 
+from oauth2client.contrib.django_util.models import CredentialsField
+
+class CredentialsModel(models.Model):
+  id = models.ForeignKey(User, primary_key=True, on_delete=models.CASCADE)
+  credential = CredentialsField()
+
+
+class CredentialsAdmin(admin.ModelAdmin):
+    pass
 # Create your models here.
 
 class Department(models.Model):

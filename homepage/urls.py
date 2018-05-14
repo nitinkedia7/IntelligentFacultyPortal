@@ -28,4 +28,7 @@ urlpatterns = [
 	
 	url(r'^faculty/$', views.FacultyProfile, name='faculty-profile'),
 	url(r'^dept/faculty/(?P<fac_id>[0-9]+)/(?P<attr_id>[0-9]+)$', views.FacultyAttributes, name='faculty-attributes'),
+
+	url(r'^faculty/gmail_consent/$', views.gmail_consent, name='faculty-gmail-consent'),
+    url(r'^oauth2callback', views.auth_return, name="faculty-auth-return"),
 ]
