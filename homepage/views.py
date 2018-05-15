@@ -273,6 +273,12 @@ def AddProject(request, pk):
 import os
 import logging
 import httplib2
+import pprint
+import base64
+from bs4 import BeautifulSoup
+import re
+import email
+from apiclient import errors
 
 from googleapiclient.discovery import build
 from django.contrib.auth.decorators import login_required
@@ -293,38 +299,60 @@ from oauth2client.contrib.django_util.storage import DjangoORMStorage
 FLOW = flow_from_clientsecrets(
     settings.GOOGLE_OAUTH2_CLIENT_SECRETS_JSON,
     scope='https://www.googleapis.com/auth/gmail.readonly',
-    redirect_uri='http://localhost:8000/oauth2callback')
+    redirect_uri='http://127.0.0.1:8000/home/oauth2callback')
 
 
 @login_required
 def gmail_consent(request):
-  storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-  credential = storage.get()
-  if credential is None or credential.invalid == True:
-    FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
-                                                   request.user)
-    authorize_url = FLOW.step1_get_authorize_url()
-    return HttpResponseRedirect(authorize_url)
-  else:
-    http = httplib2.Http()
-    http = credential.authorize(http)
-    service = build("gmail", "v1", http=http)
-    activities = service.activities()
-    activitylist = activities.list(collection='public',
-                                   userId='me').execute()
-    logging.info(activitylist)
-
-    return render(request, 'plus/welcome.html', {
-                'activitylist': activitylist,
-                })
-
+	storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+	credential = storage.get()
+	if credential is None or credential.invalid == True:
+		FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
+														request.user)
+		authorize_url = FLOW.step1_get_authorize_url()
+		return HttpResponseRedirect(authorize_url)
+	else:
+		http = httplib2.Http()
+		http = credential.authorize(http)
+		service = build("gmail", "v1", http=http)
+		# Call the Gmail API to get (relevant) messages
+		results = service.users().messages().list(userId='me', q="subject:(research paper)").execute()
+		messages = results.get('messages', [])
+		if not messages:
+			print('No messages found.')
+		else:
+			for message in messages:
+				msg = service.users().messages().get(userId='me', id=message['id']).execute()
+				pprint.pprint(msg)
+				msg_dict = {'subject' : "", 'body' : ""}
+				payload = msg['payload'] # get payload of the message 
+				# getting the Subject
+				headr = payload['headers']
+				for one in headr: 
+					if one['name'] == 'Subject':
+						msg_subject = one['value']
+						msg_dict['subject'] = msg_subject
+				# getting the message body
+				if (payload['mimeType'] == 'text/plain'):
+					msg_data = payload["body"]["data"]
+					msg_body = base64.b64decode(msg_data.encode("ASCII")).decode("UTF-8")
+					msg_dict['body'] = msg_body
+				elif (payload['mimeType'] == "multipart/alternative"):
+					for part in payload['parts']:
+						if (part['mimeType'] == 'text/plain'):
+							part_data = part['body']['data']
+							part_body = base64.b64decode(part_data.encode("ASCII")).decode("UTF-8")
+							msg_dict['body'] += part_body
+				print(msg_dict)
+				break					
+		return render(request, 'plus/welcome.html', {'activitylist': activitylist,})
 
 @login_required
 def auth_return(request):
-  if not xsrfutil.validate_token(settings.SECRET_KEY, request.REQUEST['state'],
-                                 request.user):
-    return  HttpResponseBadRequest()
-  credential = FLOW.step2_exchange(request.REQUEST)
-  storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
-  storage.put(credential)
-  return HttpResponseRedirect("/")
+	print(request.GET)
+	if not xsrfutil.validate_token(settings.SECRET_KEY, request.GET['state'].encode('UTF-8'), request.user):
+		return  HttpResponseBadRequest()
+	credential = FLOW.step2_exchange(request.GET)
+	storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
+	storage.put(credential)
+	return HttpResponseRedirect("/")
