@@ -25,6 +25,6 @@ urlpatterns = [
 	url(r'^faculty/add/admin_responsibily/(?P<pk>\d+)$', views.AddAdministrativeResponsibility, name='faculty-add-administrative-responsibility'),
 	
 	url(r'^faculty/$', views.FacultyProfile, name='faculty-profile'),
-	url(r'^dept/faculty/(?P<fac_id>[0-9]+)/(?P<attr_id>[0-9]+)$', views.FacultyAttributes, name='faculty-attributes')
+	url(r'^dept/faculty/(?P<fac_id>[0-9]+)/(?P<attr_id>[0-9]+)$', views.FacultyAttributes, name='faculty-attributes'),
     url(r'^oauth2callback', views.auth_return, name="faculty-auth-return"),
 ]
