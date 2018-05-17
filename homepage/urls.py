@@ -6,15 +6,13 @@ from .forms import LoginForm
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^dept/(?P<pk>\d+)$', views.DepartmentDetail.as_view(), name='department-detail'),
-	url(r'^dept/faculty/(?P<pk>\d+)$', views.FacultyDetail.as_view(), name='faculty-detail'),
+	url(r'^dept/faculty/(?P<pk>\d+)$', views.FacultyProfile, name='faculty-detail'),	
 	url(r'^accounts/signup/(?P<dept>\d+)$', views.SignUp, name='signup'),
 	url(r'^accounts/login/$', auth_views.login, {'authentication_form' : LoginForm }, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     url(r'^search/$', views.Search, name='search'),
 	
-	# url(r'^faculty/update/(?P<pk>\d+)$', views.FacultyUpdate.as_view(), name='faculty-update-profile'),
 	url(r'^faculty/update/(?P<pk>\d+)$', views.UpdateFaculty, name='faculty-update-profile'),
-	# url(r'^faculty/auto_update/(?P<pk>\d+)$', views.AutoUpdate, name='auto-update'),
 
 	url(r'^faculty/add/course/(?P<pk>\d+)$', views.AddCourse, name='faculty-add-course'),
 	url(r'^faculty/add/student/(?P<pk>\d+)$', views.AddStudent, name='faculty-add-student'),
@@ -27,8 +25,6 @@ urlpatterns = [
 	url(r'^faculty/add/admin_responsibily/(?P<pk>\d+)$', views.AddAdministrativeResponsibility, name='faculty-add-administrative-responsibility'),
 	
 	url(r'^faculty/$', views.FacultyProfile, name='faculty-profile'),
-	url(r'^dept/faculty/(?P<fac_id>[0-9]+)/(?P<attr_id>[0-9]+)$', views.FacultyAttributes, name='faculty-attributes'),
-
-	url(r'^faculty/gmail_consent/$', views.gmail_consent, name='faculty-gmail-consent'),
+	url(r'^dept/faculty/(?P<fac_id>[0-9]+)/(?P<attr_id>[0-9]+)$', views.FacultyAttributes, name='faculty-attributes')
     url(r'^oauth2callback', views.auth_return, name="faculty-auth-return"),
 ]

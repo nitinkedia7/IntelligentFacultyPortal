@@ -25,8 +25,8 @@ def Search(request):
 class DepartmentDetail(generic.DetailView):
 	model = Department
 
-class FacultyDetail(generic.DetailView):
-	model = Faculty
+# class FacultyDetail(generic.DetailView):
+# 	model = Faculty
 
 def SignUp(request, dept):
     if request.method == 'POST':
@@ -46,35 +46,6 @@ def SignUp(request, dept):
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
 
-# class FacultyCreate(CreateView):
-# 	model=Faculty
-# 	fields = '__all__'
-
-
-# class StudentCreate(CreateView):
-# 	model = Student
-# 	fields = '__all__'
-# 	template_name = 'homepage/faculty_form.html'
-
-# 	def get(self, request, *args, **kwargs):
-# 	    self.object = None
-# 	    pk = kwargs.get('pk')
-# 	    faculty = get_object_or_404(Faculty, pk=pk)
-# 	    context_data = self.get_context_data()
-# 	    context_data.update(faculty=faculty)
-# 	    return self.render_to_response(context_data)
-
-
-# class FacultyUpdate(UpdateView):
-# 	model=Faculty
-# 	fields = '__all__'
-# 	template_name = 'homepage/faculty_form.html'
-# 	# exclude = ['user']
-
-def FacultyProfile(request):
-	faculty = request.user.faculty
-	return render(request, 'homepage/faculty_detail.html', context={'faculty': faculty})
-
 def FacultyAttributes(request, fac_id, attr_id):
 	faculty = Faculty.objects.get(id=int(fac_id))
 	if attr_id == "0":		
@@ -83,7 +54,6 @@ def FacultyAttributes(request, fac_id, attr_id):
 		return render(request, 'homepage/faculty_publications.html', context={'faculty': faculty})
 	if attr_id == "2":
 		return render(request, 'homepage/faculty_teaching.html', context={'faculty': faculty})
-
 
 from .forms import FacultyForm, StudentForm, CourseForm, EducationForm, AchievementForm, ProfessionalExperienceForm, AdministrativeResponsibilityForm, ConferenceForm, JournalForm , ProjectForm
 
@@ -270,15 +240,13 @@ def AddProject(request, pk):
 		form = ProjectForm()
 	return render(request, 'homepage/faculty_form.html', context={'form': form, 'faculty': faculty})
 
-import os
-import logging
 import httplib2
 import pprint
 import base64
 from bs4 import BeautifulSoup
 import re
-import email
 from apiclient import errors
+from .mail_scan import mailscan
 
 from googleapiclient.discovery import build
 from django.contrib.auth.decorators import login_required
@@ -298,14 +266,17 @@ from oauth2client.contrib.django_util.storage import DjangoORMStorage
 
 FLOW = flow_from_clientsecrets(
     settings.GOOGLE_OAUTH2_CLIENT_SECRETS_JSON,
-    scope='https://www.googleapis.com/auth/gmail.readonly',
+    scope='https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.labels',
     redirect_uri='http://127.0.0.1:8000/home/oauth2callback')
 
-
-@login_required
-def gmail_consent(request):
+def FacultyProfile(request, pk):
+	faculty = Faculty.objects.get(id=pk)		
+	if not (request.user.is_authenticated and int(pk) == request.user.faculty.id):
+		return render(request, 'homepage/faculty_detail.html', context={'faculty': faculty})
+	
 	storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
 	credential = storage.get()
+
 	if credential is None or credential.invalid == True:
 		FLOW.params['state'] = xsrfutil.generate_token(settings.SECRET_KEY,
 														request.user)
@@ -316,16 +287,24 @@ def gmail_consent(request):
 		http = credential.authorize(http)
 		service = build("gmail", "v1", http=http)
 		# Call the Gmail API to get (relevant) messages
-		results = service.users().messages().list(userId='me', q="subject:(research paper)").execute()
+		results = service.users().messages().list(userId='me', q="-label:IFP  from:*.iitg.ernet.in subject:{designation responsibility Project paper}").execute()
 		messages = results.get('messages', [])
 		if not messages:
 			print('No messages found.')
 		else:
+			# print(messages)
+			print(len(messages))
+			response = service.users().labels().list(userId='me').execute()
+			labels = response['labels']
+			for label in labels:
+				if label['name'] == "IFP": labelId = label['id'] 
 			for message in messages:
 				msg = service.users().messages().get(userId='me', id=message['id']).execute()
-				pprint.pprint(msg)
+				msg_labels = {'removeLabelIds': [], 'addLabelIds': [labelId]}
+				msg1 = service.users().messages().modify(userId='me', id=message['id'], body=msg_labels).execute()
+ 				# pprint.pprint(msg)
 				msg_dict = {'subject' : "", 'body' : ""}
-				payload = msg['payload'] # get payload of the message 
+				payload = msg['payload']
 				# getting the Subject
 				headr = payload['headers']
 				for one in headr: 
@@ -343,16 +322,55 @@ def gmail_consent(request):
 							part_data = part['body']['data']
 							part_body = base64.b64decode(part_data.encode("ASCII")).decode("UTF-8")
 							msg_dict['body'] += part_body
-				print(msg_dict)
-				break					
-		return render(request, 'plus/welcome.html', {'activitylist': activitylist,})
+				# pprint.pprint(msg_dict)
+				info = mailscan(msg_dict)
+				# pprint.pprint(info)
+				pk = request.user.faculty.id
+				if info['type'] == "journal":
+					journal = Journal.objects.create()
+					journal.title = info['title']
+					journal.book = info['paper']
+					journal.contributors = info['contrib']
+					journal.faculty = Faculty.objects.get(id=pk)
+					journal.save()
+				elif info['type'] == "promotion":
+					faculty = Faculty.objects.get(id=pk)
+					faculty.designation.designation = info['designation']
+				elif info['type'] == "adminres":	
+					admres = AdministrativeResponsibility.objects.create()
+					admres.designation = info['responsibility']
+					admres.start = info['from']
+					admres.faculty = Faculty.objects.get(id=pk)
+					admres.save()
+				elif info['type'] == "project":	
+					project = Project.objects.create()
+					project.sponsor = info['sponsor']
+					project.title = info['title']
+					project.budget = info['budget']
+					project.role = info['role']
+					project.faculty = Faculty.objects.get(id=pk)
+					project.save()
+		return render(request, 'homepage/faculty_detail.html', context={'faculty': faculty})
 
 @login_required
 def auth_return(request):
 	print(request.GET)
 	if not xsrfutil.validate_token(settings.SECRET_KEY, request.GET['state'].encode('UTF-8'), request.user):
 		return  HttpResponseBadRequest()
+	
 	credential = FLOW.step2_exchange(request.GET)
+	http = httplib2.Http()
+	http = credential.authorize(http)
+	service = build("gmail", "v1", http=http)
+	try:
+		label_object = {'messageListVisibility': "show",
+           				'name': "IFP",
+           				'labelListVisibility': "labelShow"}
+		label = service.users().labels().create(userId='me',
+												body=label_object).execute()
+		print(label['id'])
+	except errors.HttpError:
+		print('An error occurred: %s' % error)
 	storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
 	storage.put(credential)
 	return HttpResponseRedirect("/")
