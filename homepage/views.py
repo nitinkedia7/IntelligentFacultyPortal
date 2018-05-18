@@ -370,7 +370,7 @@ def auth_return(request):
 												body=label_object).execute()
 		print(label['id'])
 	except errors.HttpError:
-		print('An error occurred: %s' % error)
+		print('An error occurred')
 	storage = DjangoORMStorage(CredentialsModel, 'id', request.user, 'credential')
 	storage.put(credential)
 	return HttpResponseRedirect("/")
